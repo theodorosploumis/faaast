@@ -5,9 +5,6 @@
 INSTALL_LETSENCYPT=0
 INSTALL_PORTAINER=1
 
-# Monitoring system ports from 9988 - 9989
-PORTAINERPORT="9988"
-
 # Change timezone manually
 #dpkg-reconfigure tzdata
 
@@ -44,12 +41,12 @@ curl https://releases.rancher.com/install-docker/17.06.sh | sh
 # Allow user www-data to run docker
 echo "www-data ALL=NOPASSWD: /usr/bin/docker" >> /etc/sudoers
 
-# Start Portainer dashboard
+# Start Portainer dashboard on port 9988
 if [ "${INSTALL_PORTAINER}" -eq "1" ]; then
   docker volume create portainer_data
   docker run -d \
          --restart=always \
-         -p ${PORTAINERPORT}:9000 \
+         -p 9988:9000 \
          -v /var/run/docker.sock:/var/run/docker.sock \
          -v portainer_data:/data \
          --name=portainer \

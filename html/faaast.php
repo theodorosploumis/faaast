@@ -5,9 +5,16 @@ require_once __DIR__ . '/settings.php';
 
 // Docker volumes
 $cache = "";
-$filename = "error.tar.gz";
+$compress_method = "tar.gz"; //zip
+$filename = "error.".$compress_method;
 
 // Get variables from url
+if (isset($_GET['compress'])) {
+  $compress_method = $_GET['compress'];
+} else {
+  $compress_method = "tar.gz";
+}
+
 if (isset($_GET['cmd'])) {
   $cmd = $_GET['cmd'];
 
@@ -15,7 +22,7 @@ if (isset($_GET['cmd'])) {
     print "Command: " . $cmd . "<br>";
   }
 
-  $filename = normalizeString($cmd) . ".tar.gz";
+  $filename = normalizeString($cmd) . "." . $compress_method;
   
   $cmd_array = explode(" ", $cmd);
   $cmd_software = strtolower($cmd_array[0]); // eg npm
@@ -25,15 +32,16 @@ if (isset($_GET['cmd'])) {
 //  unset($cmd_array[1]);
 //  $cmd_following = $cmd_array; // eg react-native (package name)
   
+  // Currently, support only these package managers/tools
   $software = [
-    "npm",
-    "pnpm",
-    "yarn",
-    "ied",
-    "gem",
     "composer",
     "drush",
-    "pip"
+    "gem",
+    "ied",
+    "pip",
+    "npm",
+    "pnpm",
+    "yarn"
   ];
   
   if (!in_array($cmd_software, $software)) {
@@ -44,7 +52,7 @@ if (isset($_GET['cmd'])) {
     httpError('Chained commands are not supported.');
   }
   
-  // Default folder to tar
+  // Default folder to compress
   $folder = "/home";
   
   switch ($cmd_software) {
@@ -68,7 +76,7 @@ if (isset($_GET['cmd'])) {
       if (!in_array($cmd_command, ["install", "add"])) {
         httpError($cmd_software . " " .$cmd_command . " is not a valid command. Use 'npm install/add'.");
       }
-      $cmd = $cmd_software . " set progress=false && " . $cmd . " --silent";
+      $cmd = $cmd_software . " set progress=false; " . $cmd . " --silent";
       $cache = " -v /caches/npm/:/.npm";
       break;
       
@@ -106,10 +114,14 @@ if (isset($_GET['cmd'])) {
   $cmd = $cmd . ";";
   $cmd_cd = " cd ". $folder .";";
   $cmd_chown_home = " chown -R www-data:www-data ". $folder . ";";
-  $cmd_tar = " tar -zcvf /downloads/".$filename." *;";
-  $cmd_chown_tar = " chown -R www-data:www-data /downloads/";
+  if ($compress_method == "tar") {
+    $cmd_compress = " tar -zcvf /downloads/" . $filename . " *;";
+  } else {
+    $cmd_compress = " zip -r /downloads/" . $filename . " *;";
+  }
+  $cmd_chown_compressed = " chown -R www-data:www-data /downloads/";
 
-  $command = ' /bin/bash -c "' . $cmd . $cmd_chown_home . $cmd_cd . $cmd_tar . $cmd_chown_tar . '"';
+  $command = ' /bin/bash -c "' . $cmd . $cmd_chown_home . $cmd_cd . $cmd_compress . $cmd_chown_compressed . '"';
 
 } else {
   httpError('Command is not defined.');
@@ -129,16 +141,16 @@ if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
     mkdir($builds_path . $id, 0777);
   }
   $host_files = $builds_path . $id . "/";
-  $initial_tar_path = $host_files . $filename;
+  $initial_compressed_path = $host_files . $filename;
 
   // Set final (desirable) host file path
-  $tar_path = $builds_path . $filename;
-  $tar_url = "https://" . $domain . "/builds/" . $filename;
+  $compressed_path = $builds_path . $filename;
+  $compressed_url = "https://" . $domain . "/builds/" . $filename;
 
   // Download the file if exists
-  if (file_exists($tar_path)) {
-    //downloadFile($tar_path);
-    redirectTo($tar_url);
+  if (file_exists($compressed_path)) {
+    //downloadFile($compressed_path);
+    redirectTo($compressed_url);
   }
 
   // Run docker and create the file if not exist
@@ -154,7 +166,7 @@ if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
     exec($docker);
   
     // Move file into a new place/name
-    rename($initial_tar_path, $tar_path);
+    rename($initial_compressed_path, $compressed_path);
 
     // Remove volumed host folder
     if (is_dir($host_files)) {
@@ -163,7 +175,7 @@ if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
     
     // Download file
     //downloadFile($initial_tar_path);
-    redirectTo($tar_url);
+    redirectTo($compressed_url);
   }
 
 } else {
