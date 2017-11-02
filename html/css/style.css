@@ -1,0 +1,72 @@
+body {
+  background: #eaeaea;
+  font-family: "Cutive Mono" ,"Courier New", Courier, monospace;
+}
+
+.wrapper {
+  overflow: hidden;
+  padding: 20px 80px;
+  margin: 0 auto;
+  max-width: 1260px;
+  min-height: 400px;
+}
+
+h1 {
+  font-size: 26px;
+  text-align: center;
+  margin: 40px 20px 0;
+  position: relative;
+}
+
+.info {
+  margin: 30px auto;
+  border: 1px solid #c1c0c0;
+  padding: 5px;
+  width: 350px;
+}
+
+footer {
+  clear: both;
+  overflow: hidden;
+  padding-top: 10px;
+  border-top: 1px solid #fff;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin: 15px 0 0;
+  font-weight: bold;
+}
+
+input {
+  padding: 10px;
+  min-width: 350px;
+}
+
+input[name="id"] {
+  opacity: 0.4;
+}
+
+.form {
+  width: 350px;
+  margin: 0 auto;
+}
+
+.submit {
+  background: #ff4500;
+  color: #fff;
+  margin: 20px 0;
+  border: none;
+  padding: 14px;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#running {
+  margin-top: 20px;
+  display: none;
+  text-align: center;
+}
