@@ -20,17 +20,17 @@ h1 {
 
 .info {
   margin: 30px auto;
-  border: 1px solid #c1c0c0;
-  padding: 5px;
-  width: 350px;
+  padding: 20px;
+  width: 450px;
 }
 
 footer {
-  clear: both;
-  overflow: hidden;
-  padding-top: 10px;
-  border-top: 1px solid #fff;
+  background: #fff;
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
 }
 
 label {
@@ -39,9 +39,15 @@ label {
   font-weight: bold;
 }
 
-input {
-  padding: 10px;
-  min-width: 350px;
+.form-item {
+  min-width: 450px;
+  margin: 10px auto;
+  clear: both;
+  display: block;
+  text-align: center;
+  border: none;
+  padding: 14px;
+  font-size: 20px;
 }
 
 input[name="id"] {
@@ -49,18 +55,14 @@ input[name="id"] {
 }
 
 .form {
-  width: 350px;
+  width: 900px;
+  min-width: 350px;
   margin: 0 auto;
 }
 
-.submit {
+#submit-button {
   background: #ff4500;
   color: #fff;
-  margin: 20px 0;
-  border: none;
-  padding: 14px;
-  font-size: 20px;
-  text-transform: uppercase;
   font-weight: bold;
   cursor: pointer;
 }
@@ -69,4 +71,9 @@ input[name="id"] {
   margin-top: 20px;
   display: none;
   text-align: center;
+}
+
+.hidden {
+  position: absolute;
+  visibility: hidden;
 }
