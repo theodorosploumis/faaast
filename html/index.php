@@ -10,29 +10,11 @@ require_once __DIR__ . '/functions.php';
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
     <title>Faaast Download</title>
-
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css?family=Cutive+Mono"
-          rel="stylesheet">
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo $google_analytics_code; ?>"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-
-        gtag('js', new Date());
-        gtag('config', '<?php echo $google_analytics_code; ?>');
-    </script>
-
-    <script type='text/javascript'
-            src='//platform-api.sharethis.com/js/sharethis.js#property=<?php print $sharethis; ?>&product=sticky-share-buttons'
-            async='async'>
-    </script>
+    <link href="<?php print googleFonts(); ?>" rel="stylesheet">
+    <?php print googleAnalytics($google_analytics_code); ?>
+    <?php print shareThis($sharethis); ?>
 
 </head>
 
@@ -44,27 +26,27 @@ require_once __DIR__ . '/functions.php';
 <section class="wrapper">
 
     <p class="info">
-        1. Set a package "Command"<br>
-        2. Select compress type.<br>
+        1. Type your "Command"<br>
+        2. Select compress type<br>
         3. Click "Download"<br>
-        4. Get the <a href="/builds">packaged file</a><br>
-        <br>
+        4. Get the <a href="/builds">packaged file</a>
+        <br><br>
         <small>
-            <a href="https://www.npmjs.com/">npm</a> | <a
-                    href="https://yarnpkg.com/">yarn</a> | <a
-                    href="https://pnpm.js.org/">pnpm</a> | <a
-                    href="https://github.com/alexanderGugel/ied">ied</a> | <a
-                    href="https://rubygems.org/">gem</a> | <a
-                    href="https://getcomposer.org">composer</a> | <a
-                    href="https://github.com/drush-ops/drush">drush</a> | <a
-                    href="https://pip.pypa.io/">pip</a>
+            <a href="https://www.npmjs.com/">npm</a> |
+            <a href="https://yarnpkg.com/">yarn</a> |
+            <a href="https://pnpm.js.org/">pnpm</a> |
+            <a href="https://github.com/alexanderGugel/ied">ied</a> |
+            <a href="https://rubygems.org/">gem</a> |
+            <a href="https://getcomposer.org">composer</a> |
+            <a href="https://github.com/drush-ops/drush">drush</a> |
+            <a href="https://pip.pypa.io/">pip</a>
         </small>
     </p>
 
     <form id="submit-form" class="form" action="" method="post">
 
         <label class="hidden">Command*:</label>
-        <input class="form-item" type="text" name="cmd"
+        <input class="form-item" type="text" name="cmd" id="command"
                placeholder="eg. npm install visionmedia/express"
                required="required">
 
@@ -78,34 +60,32 @@ require_once __DIR__ . '/functions.php';
             <option value="tar.gz">tar.gz</option>
             <option value="zip">zip</option>
         </select>
-        <input class="form-item" id="submit-button" type="submit"
-               value="Download">
 
         <div class="form-item" id="running">
             <img src="loading.gif">
             <span> Packaging...</span>
         </div>
 
+        <input class="form-item" id="submit-button" type="submit" value="Download">
 
         <?php
 
-        // General option
+        // General options
         $debug_message = "";
         $error = FALSE;
         $cache = "";
-        $compress_method = "tar.gz"; //zip
-        $filename = "error." . $compress_method;
 
-        // Currently, support only these package managers/tools
-        $software = ["composer", "drush", "gem", "ied", "pip", "npm", "pnpm", "yarn"];
-
-        // Get variables from url
         if (isset($_POST['compress'])) {
             $compress_method = $_POST['compress'];
         } else {
             $compress_method = "tar.gz";
         }
+        $filename = "error." . $compress_method;
 
+        // Currently, support only these package managers/tools
+        $software = ["composer", "drush", "gem", "ied", "pip", "npm", "pnpm", "yarn"];
+
+        // Get cmd from url
         if (isset($_POST['cmd'])) {
             $cmd = $_POST['cmd'];
 
@@ -137,7 +117,8 @@ require_once __DIR__ . '/functions.php';
             switch ($cmd_software) {
             case "gem":
                 if (!in_array($cmd_command, ["install"])) {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command. Use 'gem install'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+                    $debug_message .= " Use 'gem install'.";
                     $error = TRUE;
                 }
                 $cmd = $cmd . " --install-dir /home";
@@ -146,7 +127,8 @@ require_once __DIR__ . '/functions.php';
 
             case "pip":
                 if (!in_array($cmd_command, ["install"])) {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command. Use 'pip install'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+                    $debug_message .= " Use 'pip install'.";
                     $error = TRUE;
                 }
                 $cmd = $cmd . " --target=/home";
@@ -155,7 +137,8 @@ require_once __DIR__ . '/functions.php';
 
             case "npm":
                 if (!in_array($cmd_command, ["install", "add"])) {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command. Use 'npm install/add'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+                    $debug_message .= " Use 'npm install/add'.";
                     $error = TRUE;
                 }
                 $cmd = $cmd_software . " set progress=false; " . $cmd . " --silent";
@@ -164,7 +147,8 @@ require_once __DIR__ . '/functions.php';
 
             case "yarn":
                 if (!in_array($cmd_command, ["add"])) {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command. Use 'yarn add'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+                    $debug_message .= "Use 'yarn add'.";
                     $error = TRUE;
                 }
                 $cmd = $cmd . " --no-progress --silent --prefer-online --ignore-optional --non-interactive";
@@ -173,15 +157,25 @@ require_once __DIR__ . '/functions.php';
 
             case "pnpm":
                 if ($cmd_command != "install") {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command. Use 'pnpm install'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+                    $debug_message .= " Use 'pnpm install'.";
                     $error = TRUE;
                 }
                 $cmd = "echo '{}' > package.json && " . $cmd;
                 break;
 
+            case "ied":
+                if ($cmd_command != "install") {
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+                    $debug_message .= " Use 'ied install'.";
+                    $error = TRUE;
+                }
+                break;
+
             case "composer":
                 if (!in_array($cmd_command, ["require", "create-project"])) {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command. Use 'composer require/create-project'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+                    $debug_message .= "Use 'composer require/create-project'.";
                     $error = TRUE;
                 }
                 $cmd = $cmd . " --quiet --no-ansi --no-interaction --working-dir=/home";
@@ -190,7 +184,8 @@ require_once __DIR__ . '/functions.php';
 
             case "drush":
                 if (!in_array($cmd_command, ["pm-download", "dl"])) {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command. Use 'drush dl/pm-download'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+                    $debug_message .= " Use 'drush dl/pm-download'.";
                     $error = TRUE;
                 }
                 $cache = " -v /caches/drush:/.drush/cache/download";
@@ -211,7 +206,7 @@ require_once __DIR__ . '/functions.php';
 
         } else {
             $debug_message .= 'Command is not defined.';
-            $error = TRUE;
+            //$error = TRUE;
         }
 
         if (isset($_POST['id']) && (strlen($_POST['id']) == 20)) {
@@ -271,16 +266,16 @@ require_once __DIR__ . '/functions.php';
 
         } else {
             $debug_message .= 'ID is not defined.';
-            $error = TRUE;
+            //$error = TRUE;
         }
 
         ?>
 
         <?php if ($error == TRUE) { ?>
             <div class="form-item">
-          <span>
-            <?php print $debug_message; ?>
-          </span>
+                <span>
+                    <?php print $debug_message; ?>
+                </span>
             </div>
         <?php } ?>
 
@@ -290,8 +285,7 @@ require_once __DIR__ . '/functions.php';
 
 <footer>
     <p>
-        Created by <a href="https://www.theodorosploumis.com/en">TheodorosPloumis</a>
-        | Hosted on <a href="https://m.do.co/c/1123d0854c8f">DigitalOcean</a>
+        <?php print footerMessage(); ?>
     </p>
 </footer>
 

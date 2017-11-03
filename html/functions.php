@@ -83,3 +83,55 @@ function stringContains($string, array $array) {
   }
   return false;
 }
+
+/**
+ * @param string $code
+ * @return string
+ */
+function googleAnalytics($code) {
+    $script = "";
+
+    $script .= '<script async src="https://www.googletagmanager.com/gtag/js?id=' . $code . '"></script>';
+    $script .= '<script>';
+    $script .= 'window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); }';
+    $script .= "gtag('js', new Date());";
+    $script .= "gtag('config', '" . $code . "');";
+    $script .= '</script>';
+
+    return $script;
+}
+
+/**
+ * @param string $id
+ * @return string
+ */
+function shareThis($id) {
+    $script = "";
+    $script .= "<script type='text/javascript' ";
+    $script .= "src='//platform-api.sharethis.com/js/sharethis.js#property=" . $id . "&product=sticky-share-buttons' ";
+    $script .= "async='async'>";
+    $script .= "</script>";
+
+    return $script;
+}
+
+/**
+ * @return string
+ */
+function googleFonts() {
+    return "https://fonts.googleapis.com/css?family=Lato|Source+Sans+Pro:300,400";
+}
+
+/**
+ * @return string
+ */
+function footerMessage() {
+    $text = "";
+    $text .= '&copy; <a href="https://www.theodorosploumis.com/en">TheodorosPloumis</a>';
+    $text .= ' | ';
+    $text .= "<a href='/faqs.php'>FAQs</a>";
+    $text .= ' | ';
+    $text .= 'Hosted on <a href="https://m.do.co/c/1123d0854c8f">DigitalOcean</a>';
+
+    return $text;
+}

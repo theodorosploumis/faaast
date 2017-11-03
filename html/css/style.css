@@ -1,14 +1,14 @@
 body {
   background: #eaeaea;
-  font-family: "Cutive Mono" ,"Courier New", Courier, monospace;
+  padding-bottom: 30px;
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 300;
+  font-size: 18px;
 }
 
-.wrapper {
-  overflow: hidden;
-  padding: 20px 80px;
-  margin: 0 auto;
-  max-width: 1260px;
-  min-height: 400px;
+h1, h2 {
+  font-family: Lato, sans-serif;
+  font-size: 24px;
 }
 
 h1 {
@@ -18,10 +18,30 @@ h1 {
   position: relative;
 }
 
+b, strong {
+  font-weight: 400;
+}
+
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+ul {
+  padding: 4px;
+  margin: 1em;
+}
+
+.wrapper {
+  overflow: hidden;
+  padding: 10px;
+  margin: 0 auto;
+  max-width: 450px;
+}
+
 .info {
   margin: 30px auto;
-  padding: 20px;
-  width: 450px;
+  padding: 20px 0;
 }
 
 footer {
@@ -40,8 +60,8 @@ label {
 }
 
 .form-item {
-  min-width: 450px;
-  margin: 10px auto;
+  width: 100%;
+  margin: 10px 0;
   clear: both;
   display: block;
   text-align: center;
@@ -50,14 +70,8 @@ label {
   font-size: 20px;
 }
 
-input[name="id"] {
-  opacity: 0.4;
-}
-
 .form {
-  width: 900px;
-  min-width: 350px;
-  margin: 0 auto;
+  padding-bottom: 20px;
 }
 
 #submit-button {
@@ -76,4 +90,8 @@ input[name="id"] {
 .hidden {
   position: absolute;
   visibility: hidden;
+}
+
+.faq {
+  margin-bottom: 40px;
 }
