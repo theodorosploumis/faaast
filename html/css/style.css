@@ -74,6 +74,10 @@ label {
   padding-bottom: 20px;
 }
 
+.error {
+  text-align: left;
+}
+
 #submit-button {
   background: #ff4500;
   color: #fff;

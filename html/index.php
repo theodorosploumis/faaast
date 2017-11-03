@@ -104,11 +104,11 @@ require_once __DIR__ . '/functions.php';
             //  $cmd_following = $cmd_array; // eg react-native (package name)
 
             if (!in_array($cmd_software, $software)) {
-                $debug_message .= 'Command ' . $cmd_software . ' is not supported.';
+                $debug_message .= 'Command ' . $cmd_software . ' is not supported.<br>';
             }
 
             if (stringContains($cmd, [";", "||", "& ", "&&"])) {
-                $debug_message .= 'Chained commands are not supported.';
+                $debug_message .= 'Chained commands are not supported.<br>';
             }
 
             // Default folder to compress
@@ -117,8 +117,8 @@ require_once __DIR__ . '/functions.php';
             switch ($cmd_software) {
             case "gem":
                 if (!in_array($cmd_command, ["install"])) {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-                    $debug_message .= " Use 'gem install'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
+                    $debug_message .= " Use 'gem install'.<br>";
                     $error = TRUE;
                 }
                 $cmd = $cmd . " --install-dir /home";
@@ -127,8 +127,8 @@ require_once __DIR__ . '/functions.php';
 
             case "pip":
                 if (!in_array($cmd_command, ["install"])) {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-                    $debug_message .= " Use 'pip install'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
+                    $debug_message .= " Use 'pip install'.<br>";
                     $error = TRUE;
                 }
                 $cmd = $cmd . " --target=/home";
@@ -137,8 +137,8 @@ require_once __DIR__ . '/functions.php';
 
             case "npm":
                 if (!in_array($cmd_command, ["install", "add"])) {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-                    $debug_message .= " Use 'npm install/add'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
+                    $debug_message .= " Use 'npm install/add'.<br>";
                     $error = TRUE;
                 }
                 $cmd = $cmd_software . " set progress=false; " . $cmd . " --silent";
@@ -147,8 +147,8 @@ require_once __DIR__ . '/functions.php';
 
             case "yarn":
                 if (!in_array($cmd_command, ["add"])) {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-                    $debug_message .= "Use 'yarn add'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
+                    $debug_message .= "Use 'yarn add'.<br>";
                     $error = TRUE;
                 }
                 $cmd = $cmd . " --no-progress --silent --prefer-online --ignore-optional --non-interactive";
@@ -157,8 +157,8 @@ require_once __DIR__ . '/functions.php';
 
             case "pnpm":
                 if ($cmd_command != "install") {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-                    $debug_message .= " Use 'pnpm install'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
+                    $debug_message .= " Use 'pnpm install'.<br>";
                     $error = TRUE;
                 }
                 $cmd = "echo '{}' > package.json && " . $cmd;
@@ -166,16 +166,16 @@ require_once __DIR__ . '/functions.php';
 
             case "ied":
                 if ($cmd_command != "install") {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-                    $debug_message .= " Use 'ied install'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
+                    $debug_message .= " Use 'ied install'.<br`>";
                     $error = TRUE;
                 }
                 break;
 
             case "composer":
                 if (!in_array($cmd_command, ["require", "create-project"])) {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-                    $debug_message .= "Use 'composer require/create-project'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
+                    $debug_message .= "Use 'composer require/create-project'.<br>";
                     $error = TRUE;
                 }
                 $cmd = $cmd . " --quiet --no-ansi --no-interaction --working-dir=/home";
@@ -184,100 +184,104 @@ require_once __DIR__ . '/functions.php';
 
             case "drush":
                 if (!in_array($cmd_command, ["pm-download", "dl"])) {
-                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-                    $debug_message .= " Use 'drush dl/pm-download'.";
+                    $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
+                    $debug_message .= " Use 'drush dl/pm-download'.<br>";
                     $error = TRUE;
                 }
                 $cache = " -v /caches/drush:/.drush/cache/download";
                 break;
             }
 
-            $cmd = $cmd . ";";
             $cmd_cd = " cd " . $folder . ";";
             $cmd_chown_home = " chown -R www-data:www-data " . $folder . ";";
-            if ($compress_method == "tar") {
+
+            if ($compress_method == "tar.gz") {
                 $cmd_compress = " tar -zcvf /downloads/" . $filename . " *;";
             } else {
                 $cmd_compress = " zip -r /downloads/" . $filename . " *;";
             }
             $cmd_chown_compressed = " chown -R www-data:www-data /downloads/";
 
-            $command = ' /bin/bash -c "' . $cmd . $cmd_chown_home . $cmd_cd . $cmd_compress . $cmd_chown_compressed . '"';
+            $command = ' /bin/bash -c "'.$cmd.";".$cmd_chown_home.$cmd_cd.$cmd_compress.$cmd_chown_compressed.'"';
 
         } else {
-            $debug_message .= 'Command is not defined.';
-            //$error = TRUE;
+            httpError("Command is not defined.");
         }
 
         if (isset($_POST['id']) && (strlen($_POST['id']) == 20)) {
-
             $id = $_POST['id'];
             $id = preg_replace('/[^a-z]/', '', $id);
+        } else {
+            httpError("ID is not defined");
+        }
+
+        if ($debug) {
+            $debug_message .= "ID: " . $id . "<br>";
+        }
+
+        // Host files to create volumes
+        if (!file_exists($builds_path)) {
+            mkdir($builds_path . $id, 0777);
+        }
+        $host_files = $builds_path . $id . "/";
+        $initial_compressed_path = $host_files . $filename;
+
+        // Set final (desirable) host file path
+        $compressed_path = $builds_path . $filename;
+        $compressed_url = "https://" . $domain . "/builds/" . $filename;
+
+        // Download the file if exists
+        if (file_exists($compressed_path)) {
+            //downloadFile($compressed_path);
+            redirectTo($compressed_url);
+            exit();
+        }
+
+        // Run docker and create the file if not exist
+        if (!file_exists($compressed_path) && $error == FALSE) {
+
+            if (!is_dir($host_files)) {
+                mkdir($host_files, 0777);
+            }
+
+            $volumes = $cache . " -v " . $host_files . ":/downloads ";
+            $name = " --name " . $id;
+            $workdir = " -w /home ";
+            $docker = "docker run --rm " . $name . $workdir . $volumes . $docker_image . $command;
+
+            // Run docker
+            if ($debug) {
+                $debug_message .= "Docker: " . $docker . "<br>";
+            }
+            exec($docker, $docker_output);
 
             if ($debug) {
-                $debug_message .= "ID: " . $id . "<br>";
+                var_dump($docker_output);
             }
 
-            // Host files to create volumes
-            if (!file_exists($builds_path)) {
-                mkdir($builds_path . $id, 0777);
-            }
-            $host_files = $builds_path . $id . "/";
-            $initial_compressed_path = $host_files . $filename;
-
-            // Set final (desirable) host file path
-            $compressed_path = $builds_path . $filename;
-            $compressed_url = "https://" . $domain . "/builds/" . $filename;
-
-            // Download the file if exists
-            if (file_exists($compressed_path) && $error == FALSE) {
-                //downloadFile($compressed_path);
-                redirectTo($compressed_url);
-                exit();
+            // Docker result will be empty if there are errors
+            if (empty($docker_output)) {
+                httpError("Command <b>" . $cmd . "</b> could not be executed.");
             }
 
-            // Run docker and create the file if not exist
-            if (!file_exists($compressed_path) && $error == FALSE) {
+            // Move file into a new place/name
+            rename($initial_compressed_path, $compressed_path);
 
-                if (!file_exists($host_files)) {
-                    mkdir($host_files, 0777);
-                }
-
-                $volumes = $cache . " -v " . $host_files . ":/downloads ";
-                $name = " --name " . $id;
-                $workdir = " -w /home ";
-                $docker = "docker run --rm " . $name . $workdir . $volumes . $docker_image . $command;
-
-                // Run docker
-                exec($docker);
-
-                // Move file into a new place/name
-                rename($initial_compressed_path, $compressed_path);
-
-                // Remove volumed host folder
-                if (is_dir($host_files)) {
-                    rmdir($host_files);
-                }
-
-                // Download file
-                //downloadFile($initial_tar_path);
-                redirectTo($compressed_url);
+            // Remove volumed host folder
+            if (is_dir($host_files)) {
+                rmdir($host_files);
             }
+
+            // Download file
+            //downloadFile($initial_compressed_path);
+            redirectTo($compressed_url);
 
         } else {
-            $debug_message .= 'ID is not defined.';
-            //$error = TRUE;
+            print '<div class="form-item error">' . $debug_message . '</div>';
+            die();
         }
 
         ?>
-
-        <?php if ($error == TRUE) { ?>
-            <div class="form-item">
-                <span>
-                    <?php print $debug_message; ?>
-                </span>
-            </div>
-        <?php } ?>
 
     </form>
 
