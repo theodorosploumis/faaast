@@ -125,6 +125,11 @@ if (isset($_GET['cmd'])) {
         break;
     }
 
+    if ($error == TRUE) {
+        echo $debug_message;
+        exit();
+    }
+
     $cmd_main = $cmd . " > /error/command.log 2>&1";
     $cmd_cd = " cd " . $folder . ";";
     $cmd_chown_home = " chown -R www-data:www-data " . $folder . ";";
@@ -140,17 +145,20 @@ if (isset($_GET['cmd'])) {
 
 } else {
     debugConsole("Command is not defined.");
+    echo "ID is not defined";
+    exit();
 }
 
 if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
     $id = $_GET['id'];
     $id = preg_replace('/[^a-z]/', '', $id);
-} else {
-    debugConsole("ID is not defined");
-}
 
-if ($debug) {
-    debugConsole("ID=" . $id);
+    if ($debug) {
+        debugConsole("ID=" . $id);
+    }
+} else {
+    echo "ID is not defined";
+    exit();
 }
 
 // Host files to create volumes
@@ -199,7 +207,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     // Docker result will be empty if there are errors
     if (empty($docker_output)) {
         redirectTo($error_file);
-        debugConsole("Command " . $cmd . " could not be executed.");
+//        debugConsole("Command " . $cmd . " could not be executed.");
     }
 
     // Move file into a new place/name
