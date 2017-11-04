@@ -200,17 +200,8 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     if ($debug) {
         debugConsole("Docker=" . $docker);
     }
-    exec($docker, $docker_output);
 
-    if ($debug) {
-        var_dump($docker_output);
-    }
-
-    // Docker result will be empty if there are errors
-    if (empty($docker_output)) {
-        //redirectTo($error_file);
-        debugConsole("Command " . $cmd . " could not be executed.");
-    }
+    exec($docker);
 
     // Move file into a new place/name
     rename($initial_compressed_path, $compressed_path);
