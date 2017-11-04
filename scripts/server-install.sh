@@ -63,6 +63,9 @@ echo ". /var/www/scripts/.docker-aliases" >> ~/.bashrc
 echo "fi" >> ~/.bashrc
 source ~/.bashrc
 
+# Create folders
+mkdir -p /caches/pip /caches/composer /caches/gem /caches/npm /caches/yarn
+
 # Remove unused packages
 apt-get autoremove
 
