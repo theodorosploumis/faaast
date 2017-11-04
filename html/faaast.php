@@ -139,7 +139,7 @@ if (isset($_GET['cmd'])) {
     if ($compress_method == "tar.gz") {
         $cmd_compress = " tar -zcvf /downloads/" . $filename . " *;";
     } else {
-        $cmd_compress = " zip -r /downloads/" . $filename . " *;";
+        $cmd_compress = " zip -r /downloads/" . $filename . " . -i *;";
     }
     $cmd_chown_compressed = " chown -R www-data:www-data /downloads/";
 
@@ -209,7 +209,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     // Docker result will be empty if there are errors
     if (empty($docker_output)) {
         redirectTo($error_file);
-//        debugConsole("Command " . $cmd . " could not be executed.");
+        // debugConsole("Command " . $cmd . " could not be executed.");
     }
 
     // Move file into a new place/name
