@@ -146,7 +146,7 @@ if (isset($_GET['cmd'])) {
     } else {
         $cmd_compress = " zip -r /downloads/" . $filename . " *";
     }
-    $cmd_chown_compressed = " chown -R www-data:www-data /downloads/";
+    $cmd_chown_compressed = " chown -R www-data:www-data /downloads/ && chown -R www-data:www-data /error/ ";
 
     $command = ' /bin/bash -c "';
     $command .= $cmd_main.' && ';
@@ -225,6 +225,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
         rename($initial_compressed_path, $compressed_path);
         rmdir($current_build_folder);
         redirectTo($compressed_url);
+        exit();
     }
 
     if (file_exists($error_file_path)){
@@ -233,6 +234,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
         rename($error_initial_file_path, $error_file_path);
         rmdir($current_build_folder);
         redirectTo($error_file_url);
+        exit();
     }
 
 
