@@ -38,10 +38,12 @@ if (isset($_GET['cmd'])) {
 
     if (!in_array($cmd_software, $software)) {
         $debug_message .= 'Command ' . $cmd_software . ' is not supported.<br>';
+        $error = TRUE;
     }
 
     if (stringContains($cmd, [";", "||", "& ", "&&"])) {
         $debug_message .= 'Chained commands are not supported.<br>';
+        $error = TRUE;
     }
 
     // Default folder to compress
