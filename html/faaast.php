@@ -133,17 +133,17 @@ if (isset($_GET['cmd'])) {
     }
 
     $cmd_main = $cmd . " > /error/command.log 2>&1";
-    $cmd_cd = " cd " . $folder . ";";
-    $cmd_chown_home = " chown -R www-data:www-data " . $folder . ";";
+    $cmd_cd = " cd " . $folder;
+    $cmd_chown_home = " chown -R www-data:www-data " . $folder;
 
     if ($compress_method == "tar.gz") {
-        $cmd_compress = " tar -zcvf /downloads/" . $filename . " *;";
+        $cmd_compress = " tar -zcvf /downloads/" . $filename . " *";
     } else {
-        $cmd_compress = " zip -r /downloads/" . $filename . " . -i *;";
+        $cmd_compress = " zip -r /downloads/" . $filename . " *";
     }
     $cmd_chown_compressed = " chown -R www-data:www-data /downloads/";
 
-    $command = ' /bin/bash -c "'.$cmd_main.";".$cmd_chown_home.$cmd_cd.$cmd_compress.$cmd_chown_compressed.'"';
+    $command = ' /bin/bash -c "'.$cmd_main.'&&'.$cmd_chown_home.';'.$cmd_cd.';'.$cmd_compress.'&&'.$cmd_chown_compressed.'"';
 
 } else {
     debugConsole("Command is not defined.");
