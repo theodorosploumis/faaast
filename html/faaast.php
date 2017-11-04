@@ -181,9 +181,8 @@ if (!file_exists($builds_path)) {
 }
 $current_build_folder = $builds_path . $id . "/"; // the folder that will be volumed
 
+// Initial and final (desirable) packaged file path
 $initial_compressed_path = $current_build_folder . $filename;
-
-// Set final (desirable) host file path
 $compressed_path = $builds_path . $filename;
 $compressed_url = "https://" . $domain . "/builds/" . $filename;
 
@@ -226,15 +225,14 @@ if (!file_exists($compressed_path) && $error == FALSE) {
         rename($initial_compressed_path, $compressed_path);
         rmdir($current_build_folder);
         redirectTo($compressed_url);
+    }
 
+    if (file_exists($error_file_path)){
+        redirectTo($error_file_url);
     } else {
-        if (file_exists($error_file_path)){
-            redirectTo($error_file_url);
-        } else {
-            rename($error_initial_file_path, $error_file_path);
-            rmdir($current_build_folder);
-            redirectTo($error_file_url);
-        }
+        rename($error_initial_file_path, $error_file_path);
+        rmdir($current_build_folder);
+        redirectTo($error_file_url);
     }
 
 
