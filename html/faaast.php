@@ -131,12 +131,14 @@ if (isset($_GET['cmd'])) {
     }
 
     // Capture command output on a file and append the command
-    $cmd_main = $cmd. " >> /error/command.log 2>&1 && printf \n" . $cmd . " \n >> /error/command.log";
+    $cmd_main = $cmd. " > /error/command.log 2>&1";
 
     //$cmd_exit = "$(if [ $(du -shb /home | awk '{print $1}') -lt 8000 ]; then exit; fi)"; // 8000 bytes
     //$cmd_exit = "$(if [ (echo $?) != 0 ]; then exit; fi)";
     $cmd_cd = " cd " . $folder;
     $cmd_chown_home = " chown -R www-data:www-data " . $folder;
+
+    $cmd_debug = "printf '" . $cmd . "' \n >> /error/command.log";
 
     if ($compress_method == "tar.gz") {
         $cmd_compress = " tar -zcvf /downloads/" . $filename . " *";
@@ -145,7 +147,13 @@ if (isset($_GET['cmd'])) {
     }
     $cmd_chown_compressed = " chown -R www-data:www-data /downloads/";
 
-    $command = ' /bin/bash -c "'.$cmd_main.' && '.$cmd_chown_home.' && '.$cmd_cd.' && '.$cmd_compress.' && '.$cmd_chown_compressed.'"';
+    $command = ' /bin/bash -c "';
+    $command .= $cmd_main.' && ';
+    $command .= $cmd_chown_home.' && ';
+    $command .= $cmd_cd.' && ';
+    $command .= $cmd_compress.' && ';
+    $command .= $cmd_chown_compressed.' && ';
+    $command .= $cmd_debug. '"';
 
 } else {
     debugConsole("Command is not defined.");
