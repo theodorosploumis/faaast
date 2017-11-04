@@ -68,7 +68,7 @@ RUN apt-get clean && \
 RUN mkdir /downloads /error
 
 # Copy useful files
-COPY faast.readme.txt command.log /error
+COPY faast.readme.txt command.log /error/
 
 WORKDIR /home
 
