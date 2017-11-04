@@ -215,7 +215,9 @@ require_once __DIR__ . '/functions.php';
             $id = $_POST['id'];
             $id = preg_replace('/[^a-z]/', '', $id);
         } else {
-            httpError("ID is not defined");
+            if ($debug) {
+                httpError("ID is not defined");
+            }
         }
 
         if ($debug) {
