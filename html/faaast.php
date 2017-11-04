@@ -32,6 +32,8 @@ if (isset($_GET['cmd'])) {
     $cmd_software = strtolower($cmd_array[0]); // eg npm
     $cmd_command = strtolower($cmd_array[1]); // eg install
 
+    $error_filename = normalizeString($cmd) . ".error.log";
+
     //  unset($cmd_array[0]);
     //  unset($cmd_array[1]);
     //  $cmd_following = $cmd_array; // eg react-native (package name)
@@ -130,7 +132,7 @@ if (isset($_GET['cmd'])) {
     }
 
     // Capture command output on a file and append the command
-    $cmd_main = $cmd. " > /error/command.log 2>&1";
+    $cmd_main = $cmd. " > /error/".$error_filename." 2>&1";
 
     //$cmd_exit = "$(if [ $(du -shb /home | awk '{print $1}') -lt 8000 ]; then exit; fi)"; // 8000 bytes
     //$cmd_exit = "$(if [ (echo $?) != 0 ]; then exit; fi)";
@@ -152,7 +154,7 @@ if (isset($_GET['cmd'])) {
     $command .= $cmd_cd.' && ';
     $command .= $cmd_compress.' && ';
     $command .= $cmd_chown_compressed;
-//    $command .= $cmd_debug;
+    // $command .= $cmd_debug;
     $command .= '"';
 
 } else {
@@ -177,8 +179,9 @@ if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
 if (!file_exists($builds_path)) {
     mkdir($builds_path . $id, 0777);
 }
-$host_files = $builds_path . $id . "/";
-$initial_compressed_path = $host_files . $filename;
+$current_build_folder = $builds_path . $id . "/"; // the folder that will be volumed
+
+$initial_compressed_path = $current_build_folder . $filename;
 
 // Set final (desirable) host file path
 $compressed_path = $builds_path . $filename;
@@ -194,13 +197,17 @@ if (file_exists($compressed_path)) {
 // Run docker and create the file if not exist
 if (!file_exists($compressed_path) && $error == FALSE) {
 
-    if (!is_dir($host_files)) {
-        mkdir($host_files, 0777);
+    if (!is_dir($current_build_folder)) {
+        mkdir($current_build_folder, 0777);
     }
 
-    $volumes = $cache . " -v " . $host_files . ":/downloads ";
-    $error_volumes = " -v " . $host_files . "/error:/error ";
-    $error_file = "https://" . $domain ."/builds/" . $id . "/error/command.log";
+    $volumes = $cache . " -v " . $current_build_folder . ":/downloads ";
+    
+    // Error log etc
+    $error_volumes = " -v " . $current_build_folder . "/error:/error ";
+    $error_initial_file_path = $current_build_folder ."/error/" . $error_filename;
+    $error_file_path = $builds_path ."/error/" . $error_filename;
+    $error_file_url = "https://" . $domain . "/builds/error/" . $error_filename;
 
     $name = " --name " . $id;
     $workdir = " -w /home ";
@@ -217,15 +224,19 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     if (file_exists($initial_compressed_path)) {
         //downloadFile($initial_compressed_path);
         rename($initial_compressed_path, $compressed_path);
+        rmdir($current_build_folder);
         redirectTo($compressed_url);
+
     } else {
-        redirectTo($error_file);
+        if (file_exists($error_file_path)){
+            redirectTo($error_file_url);
+        } else {
+            rename($error_initial_file_path, $error_file_path);
+            rmdir($current_build_folder);
+            redirectTo($error_file_url);
+        }
     }
 
-    // Remove volumed host folder
-    if (is_dir($host_files)) {
-        rmdir($host_files);
-    }
 
 } else {
     print $debug_message;

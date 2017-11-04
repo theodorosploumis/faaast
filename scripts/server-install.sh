@@ -64,7 +64,7 @@ echo "fi" >> ~/.bashrc
 source ~/.bashrc
 
 # Create folders
-mkdir -p /caches/pip /caches/composer /caches/gem /caches/npm /caches/yarn
+mkdir -p /caches/pip /caches/composer /caches/gem /caches/npm /caches/yarn /caches/drush
 
 # Remove unused packages
 apt-get autoremove
