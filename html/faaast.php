@@ -143,7 +143,7 @@ if (isset($_GET['cmd'])) {
     }
     $cmd_chown_compressed = " chown -R www-data:www-data /downloads/";
 
-    $command = ' /bin/bash -c "'.$cmd_main.";".$cmd_exit.';'.$cmd_chown_home.';'.$cmd_cd.';'.$cmd_compress.';'.$cmd_chown_compressed.'"';
+    $command = ' /bin/bash -c "'.$cmd_main."&&".$cmd_exit.';'.$cmd_chown_home.';'.$cmd_cd.';'.$cmd_compress.';'.$cmd_chown_compressed.'"';
 
 } else {
     debugConsole("Command is not defined.");
