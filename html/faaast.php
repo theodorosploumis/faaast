@@ -130,7 +130,7 @@ if (isset($_GET['cmd'])) {
         exit();
     }
 
-    $cmd_main = "echo " . $cmd . " \n >> /error/command.log && " .$cmd. " >> /error/command.log 2>&1";
+    $cmd_main = "printf " . $cmd . " \n >> /error/command.log && " .$cmd. " >> /error/command.log 2>&1";
     //$cmd_exit = "$(if [ $(du -shb /home | awk '{print $1}') -lt 8000 ]; then exit; fi)"; // 8000 bytes
     //$cmd_exit = "$(if [ (echo $?) != 0 ]; then exit; fi)";
     $cmd_cd = " cd " . $folder;
