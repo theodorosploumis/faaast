@@ -43,7 +43,7 @@ require_once __DIR__ . '/functions.php';
         </small>
     </p>
 
-    <form id="submit-form" class="form" action="" method="post">
+    <form id="submit-form" class="form" action="" method="get">
 
         <label class="hidden">Command*:</label>
         <input class="form-item" type="text" name="cmd" id="command"
@@ -75,8 +75,8 @@ require_once __DIR__ . '/functions.php';
         $error = FALSE;
         $cache = "";
 
-        if (isset($_POST['compress'])) {
-            $compress_method = $_POST['compress'];
+        if (isset($_GET['compress'])) {
+            $compress_method = $_GET['compress'];
         } else {
             $compress_method = "tar.gz";
         }
@@ -86,8 +86,8 @@ require_once __DIR__ . '/functions.php';
         $software = ["composer", "drush", "gem", "ied", "pip", "npm", "pnpm", "yarn"];
 
         // Get cmd from url
-        if (isset($_POST['cmd'])) {
-            $cmd = $_POST['cmd'];
+        if (isset($_GET['cmd'])) {
+            $cmd = $_GET['cmd'];
 
             if ($debug) {
                 debugConsole("Command=" . $cmd);
@@ -209,8 +209,8 @@ require_once __DIR__ . '/functions.php';
             debugConsole("Command is not defined.");
         }
 
-        if (isset($_POST['id']) && (strlen($_POST['id']) == 20)) {
-            $id = $_POST['id'];
+        if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
+            $id = $_GET['id'];
             $id = preg_replace('/[^a-z]/', '', $id);
         } else {
             debugConsole("ID is not defined");
