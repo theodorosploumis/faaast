@@ -90,7 +90,7 @@ require_once __DIR__ . '/functions.php';
             $cmd = $_POST['cmd'];
 
             if ($debug) {
-                $debug_message .= "Command: " . $cmd . "<br>";
+                debugConsole("Command=" . $cmd);
             }
 
             $filename = normalizeString($cmd) . "." . $compress_method;
@@ -206,22 +206,18 @@ require_once __DIR__ . '/functions.php';
             $command = ' /bin/bash -c "'.$cmd_main.";".$cmd_chown_home.$cmd_cd.$cmd_compress.$cmd_chown_compressed.'"';
 
         } else {
-            if ($debug) {
-                httpError("Command is not defined.");
-            }
+            debugConsole("Command is not defined.");
         }
 
         if (isset($_POST['id']) && (strlen($_POST['id']) == 20)) {
             $id = $_POST['id'];
             $id = preg_replace('/[^a-z]/', '', $id);
         } else {
-            if ($debug) {
-                httpError("ID is not defined");
-            }
+            debugConsole("ID is not defined");
         }
 
         if ($debug) {
-            $debug_message .= "ID: " . $id . "<br>";
+            debugConsole("ID=" . $id);
         }
 
         // Host files to create volumes
@@ -259,7 +255,7 @@ require_once __DIR__ . '/functions.php';
 
             // Run docker
             if ($debug) {
-                $debug_message .= "Docker: " . $docker . "<br>";
+                debugConsole("Docker=" . $docker);
             }
             exec($docker, $docker_output);
 
@@ -270,7 +266,7 @@ require_once __DIR__ . '/functions.php';
             // Docker result will be empty if there are errors
             if (empty($docker_output)) {
                 redirectTo($error_file);
-                httpError("Command <b>" . $cmd . "</b> could not be executed.");
+                debugConsole("Command " . $cmd . " could not be executed.");
             }
 
             // Move file into a new place/name
