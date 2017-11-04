@@ -131,7 +131,7 @@ if (isset($_GET['cmd'])) {
     }
 
     $cmd_main = $cmd . " > /error/command.log 2>&1";
-    $cmd_exit = "$(if [ $(du -shb /home | awk '{print $1}') -lt 8000 ]; then exit 0; fi)"; // 8000 bytes
+    $cmd_exit = "$(if [ $(du -shb /home | awk '{print $1}') -lt 8000 ]; then exit; fi)"; // 8000 bytes
     //$cmd_exit = "$(if [ (echo $?) != 0 ]; then exit; fi)";
     $cmd_cd = " cd " . $folder;
     $cmd_chown_home = " chown -R www-data:www-data " . $folder;
@@ -175,11 +175,11 @@ $compressed_path = $builds_path . $filename;
 $compressed_url = "https://" . $domain . "/builds/" . $filename;
 
 // Download the file if exists
-if (file_exists($compressed_path)) {
-    //downloadFile($compressed_path);
-    redirectTo($compressed_url);
-    exit();
-}
+//if (file_exists($compressed_path)) {
+//    //downloadFile($compressed_path);
+//    redirectTo($compressed_url);
+//    exit();
+//}
 
 // Run docker and create the file if not exist
 if (!file_exists($compressed_path) && $error == FALSE) {
