@@ -14,7 +14,6 @@ if (isset($_GET['compress'])) {
 } else {
     $compress_method = "tar.gz";
 }
-$filename = "error." . $compress_method;
 
 // Currently, support only these package managers/tools
 $software = ["composer", "drush", "gem", "ied", "pip", "npm", "pnpm", "yarn"];
@@ -138,7 +137,7 @@ if (isset($_GET['cmd'])) {
     $cmd_cd = " cd " . $folder;
     $cmd_chown_home = " chown -R www-data:www-data " . $folder;
 
-    $cmd_debug = "printf '" . nl2br(trim(strip_tags($cmd))) . "' >> /error/command.log";
+//    $cmd_debug = "printf '" . nl2br(trim(strip_tags($cmd))) . "' >> /error/command.log";
 
     if ($compress_method == "tar.gz") {
         $cmd_compress = " tar -zcvf /downloads/" . $filename . " *";
@@ -152,8 +151,9 @@ if (isset($_GET['cmd'])) {
     $command .= $cmd_chown_home.' && ';
     $command .= $cmd_cd.' && ';
     $command .= $cmd_compress.' && ';
-    $command .= $cmd_chown_compressed.' && ';
-    $command .= $cmd_debug. '"';
+    $command .= $cmd_chown_compressed;
+//    $command .= $cmd_debug;
+    $command .= '"';
 
 } else {
     debugConsole("Command is not defined.");
