@@ -222,7 +222,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
 
     // Download file
     //downloadFile($initial_compressed_path);
-    redirectTo($compressed_url);
+    //redirectTo($compressed_url);
 
 } else {
     print $debug_message;
