@@ -225,6 +225,6 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     redirectTo($compressed_url);
 
 } else {
-    print '<div class="form-item error">' . $debug_message . '</div>';
-    die();
+    print $debug_message;
+    exit();
 }
