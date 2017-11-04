@@ -196,10 +196,6 @@ if (file_exists($compressed_path)) {
 // Run docker and create the file if not exist
 if (!file_exists($compressed_path) && $error == FALSE) {
 
-    if (!is_dir($current_build_folder)) {
-        mkdir($current_build_folder, 0777);
-    }
-
     $volumes = $cache . " -v " . $current_build_folder . ":/downloads ";
     
     // Error log etc

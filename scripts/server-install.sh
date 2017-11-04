@@ -30,8 +30,9 @@ fi
 # Clone git files
 rm -rf /var/www
 git clone https://github.com/theodorosploumis/faaast.git /var/www/
-mkdir /var/www/html/builds
+mkdir /var/www/html/builds /var/www/html/error
 chown -R www-data:www-data /var/www/html/builds
+chown -R www-data:www-data /var/www/html/error
 cp /var/www/html/settings.default.php /var/www/html/settings.php
 
 # Docker. Notice that we do not install latest Docker to support Rancher
