@@ -208,8 +208,8 @@ if (!file_exists($compressed_path) && $error == FALSE) {
 
     // Docker result will be empty if there are errors
     if (empty($docker_output)) {
-        redirectTo($error_file);
-        // debugConsole("Command " . $cmd . " could not be executed.");
+        //redirectTo($error_file);
+        debugConsole("Command " . $cmd . " could not be executed.");
     }
 
     // Move file into a new place/name
@@ -222,7 +222,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
 
     // Download file
     //downloadFile($initial_compressed_path);
-    //redirectTo($compressed_url);
+    redirectTo($compressed_url);
 
 } else {
     print $debug_message;
