@@ -8,7 +8,9 @@ $docker_image = "tplcom/faaast";
 // Do not use the "http://" prefix
 $domain = "localhost:8899";
 
-$builds_path = "/var/www/html/builds/";
+$files_path = "/var/www/html/";
+$builds_files_path = $files_path . "builds/";
+$error_files_path = $files_path . "error/";
 
 // Set debugging variable
 $debug = TRUE;

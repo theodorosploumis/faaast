@@ -176,14 +176,14 @@ if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
 }
 
 // Host files to create volumes
-if (!file_exists($builds_path)) {
-    mkdir($builds_path . $id, 0777);
+$current_build_folder = $builds_files_path . $id . "/"; // the folder that will be volumed
+if (!file_exists($current_build_folder)) {
+    mkdir($current_build_folder,0777);
 }
-$current_build_folder = $builds_path . $id . "/"; // the folder that will be volumed
 
 // Initial and final (desirable) packaged file path
 $initial_compressed_path = $current_build_folder . $filename;
-$compressed_path = $builds_path . $filename;
+$compressed_path = $builds_files_path . $filename;
 $compressed_url = "https://" . $domain . "/builds/" . $filename;
 
 // Download the file if exists
@@ -205,8 +205,8 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     // Error log etc
     $error_volumes = " -v " . $current_build_folder . "/error:/error ";
     $error_initial_file_path = $current_build_folder ."/error/" . $error_filename;
-    $error_file_path = $builds_path ."/error/" . $error_filename;
-    $error_file_url = "https://" . $domain . "/builds/error/" . $error_filename;
+    $error_file_path = $error_files_path . $error_filename;
+    $error_file_url = "https://" . $domain . "/error/" . $error_filename;
 
     $name = " --name " . $id;
     $workdir = " -w /home ";
@@ -236,7 +236,6 @@ if (!file_exists($compressed_path) && $error == FALSE) {
         redirectTo($error_file_url);
         exit();
     }
-
 
 } else {
     print $debug_message;
