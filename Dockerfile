@@ -64,8 +64,11 @@ RUN apt-get clean && \
     rm -rf /var/lib/apt/lists && \
     rm -f /var/www/html/index.html
     
-# Create downloads folder
-RUN mkdir /downloads
+# Create folders
+RUN mkdir /downloads /error
+
+# Copy useful files
+COPY faast.readme.txt command.log /error
 
 WORKDIR /home
 

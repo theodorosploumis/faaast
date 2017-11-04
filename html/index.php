@@ -192,6 +192,7 @@ require_once __DIR__ . '/functions.php';
                 break;
             }
 
+            $cmd_main = $cmd . " > /error/command.log 2>&1";
             $cmd_cd = " cd " . $folder . ";";
             $cmd_chown_home = " chown -R www-data:www-data " . $folder . ";";
 
@@ -202,7 +203,7 @@ require_once __DIR__ . '/functions.php';
             }
             $cmd_chown_compressed = " chown -R www-data:www-data /downloads/";
 
-            $command = ' /bin/bash -c "'.$cmd.";".$cmd_chown_home.$cmd_cd.$cmd_compress.$cmd_chown_compressed.'"';
+            $command = ' /bin/bash -c "'.$cmd_main.";".$cmd_chown_home.$cmd_cd.$cmd_compress.$cmd_chown_compressed.'"';
 
         } else {
             httpError("Command is not defined.");
@@ -245,9 +246,12 @@ require_once __DIR__ . '/functions.php';
             }
 
             $volumes = $cache . " -v " . $host_files . ":/downloads ";
+            $error_volumes = " -v " . $host_files . "/error:/error ";
+            $error_file = "https://" . $domain ."/builds/" . $id . "/error/command.log";
+
             $name = " --name " . $id;
             $workdir = " -w /home ";
-            $docker = "docker run --rm " . $name . $workdir . $volumes . $docker_image . $command;
+            $docker = "docker run --rm " . $name . $workdir . $volumes . $error_volumes . $docker_image . $command;
 
             // Run docker
             if ($debug) {
@@ -261,6 +265,7 @@ require_once __DIR__ . '/functions.php';
 
             // Docker result will be empty if there are errors
             if (empty($docker_output)) {
+                redirectTo($error_file);
                 httpError("Command <b>" . $cmd . "</b> could not be executed.");
             }
 
