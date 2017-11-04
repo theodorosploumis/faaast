@@ -133,7 +133,6 @@ if (isset($_GET['cmd'])) {
     $cmd_main = $cmd . " > /error/command.log 2>&1";
     //$cmd_exit = "$(if [ $(du -shb /home | awk '{print $1}') -lt 8000 ]; then exit; fi)"; // 8000 bytes
     //$cmd_exit = "$(if [ (echo $?) != 0 ]; then exit; fi)";
-    $cmd_exit = "ls";
     $cmd_cd = " cd " . $folder;
     $cmd_chown_home = " chown -R www-data:www-data " . $folder;
 
@@ -144,7 +143,7 @@ if (isset($_GET['cmd'])) {
     }
     $cmd_chown_compressed = " chown -R www-data:www-data /downloads/";
 
-    $command = ' /bin/bash -c "'.$cmd_main.' && '.$cmd_chown_home.' && '.$cmd_cd.' && '.$cmd_exit.' && '.$cmd_compress.' && '.$cmd_chown_compressed.'"';
+    $command = ' /bin/bash -c "'.$cmd_main.' && '.$cmd_chown_home.' && '.$cmd_cd.' && '.$cmd_compress.' && '.$cmd_chown_compressed.'"';
 
 } else {
     debugConsole("Command is not defined.");
@@ -214,7 +213,11 @@ if (!file_exists($compressed_path) && $error == FALSE) {
 
     // Download file
     //downloadFile($initial_compressed_path);
-    redirectTo($compressed_url);
+    if (file_exists($compressed_path)) {
+        redirectTo($compressed_url);
+    } else {
+        redirectTo($error_file);
+    }
 
 } else {
     print $debug_message;
