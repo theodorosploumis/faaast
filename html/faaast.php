@@ -131,7 +131,7 @@ if (isset($_GET['cmd'])) {
     }
 
     $cmd_main = $cmd . " > /error/command.log 2>&1";
-    $cmd_exit = "if [ $(du -shb /home | awk \'{print $1}\') lt 8000 ]; then exit; fi";
+    $cmd_exit = "if [ $(du -shb /home | awk '{print $1}') -lt 8000 ]; then exit; fi";
     //$cmd_exit = "if [ $? != 0 ]; then exit; fi";
     $cmd_cd = " cd " . $folder;
     $cmd_chown_home = " chown -R www-data:www-data " . $folder;
