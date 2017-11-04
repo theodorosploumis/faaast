@@ -138,7 +138,7 @@ if (isset($_GET['cmd'])) {
     $cmd_cd = " cd " . $folder;
     $cmd_chown_home = " chown -R www-data:www-data " . $folder;
 
-    $cmd_debug = "printf '" . $cmd . "' \n >> /error/command.log";
+    $cmd_debug = "printf '" . nl2br(trim(strip_tags($cmd))) . "' >> /error/command.log";
 
     if ($compress_method == "tar.gz") {
         $cmd_compress = " tar -zcvf /downloads/" . $filename . " *";
