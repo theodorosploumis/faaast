@@ -204,19 +204,17 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     exec($docker);
 
     // Move file into a new place/name
-    rename($initial_compressed_path, $compressed_path);
+    if (file_exists($initial_compressed_path)) {
+        //downloadFile($initial_compressed_path);
+        rename($initial_compressed_path, $compressed_path);
+        redirectTo($compressed_url);
+    } else {
+        redirectTo($error_file);
+    }
 
     // Remove volumed host folder
     if (is_dir($host_files)) {
         rmdir($host_files);
-    }
-
-    // Download file
-    //downloadFile($initial_compressed_path);
-    if (file_exists($compressed_path)) {
-        redirectTo($compressed_url);
-    } else {
-        redirectTo($error_file);
     }
 
 } else {
