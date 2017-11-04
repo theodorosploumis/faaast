@@ -206,7 +206,9 @@ require_once __DIR__ . '/functions.php';
             $command = ' /bin/bash -c "'.$cmd_main.";".$cmd_chown_home.$cmd_cd.$cmd_compress.$cmd_chown_compressed.'"';
 
         } else {
-            httpError("Command is not defined.");
+            if ($debug) {
+                httpError("Command is not defined.");
+            }
         }
 
         if (isset($_POST['id']) && (strlen($_POST['id']) == 20)) {
