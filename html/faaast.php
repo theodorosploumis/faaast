@@ -210,10 +210,13 @@ if (!file_exists($compressed_path) && $error == FALSE) {
 
     exec($docker);
 
+    // Sleep 10s to allow cron change new folders owner
+    sleep(10);
+
     // Move file into a new place/name
     if (file_exists($initial_compressed_path)) {
         //downloadFile($initial_compressed_path);
-        chown($current_build_folder, "www-data");
+        //chown($current_build_folder, "www-data");
         rename($initial_compressed_path, $compressed_path);
         rmdirRecursive($current_build_folder);
         redirectTo($compressed_url);

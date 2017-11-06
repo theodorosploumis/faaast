@@ -30,9 +30,15 @@ fi
 # Clone git files
 rm -rf /var/www
 git clone https://github.com/theodorosploumis/faaast.git /var/www/
-mkdir /var/www/html/builds /var/www/html/error
+
+# Create several helpful folders
+mkdir /var/www/html/builds
 chown -R www-data:www-data /var/www/html/builds
-chown -R www-data:www-data /var/www/html/error
+
+# Setup cron task
+chmod +x /var/www/scripts/cron_tasks.sh
+(crontab -l ; echo "* * * * * (sleep 5 /bin/bash /var/www/scripts/cron_tasks.sh)") | crontab
+
 cp /var/www/html/settings.default.php /var/www/html/settings.php
 
 # Docker. Notice that we do not install latest Docker to support Rancher
