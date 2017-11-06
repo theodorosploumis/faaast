@@ -147,3 +147,15 @@ function debugConsole($data) {
 
     echo "<script>console.log( 'Debug: " . $output . "' );</script>";
 }
+
+/**
+ * @param string $dir
+ */
+function rmdirRecursive($dir) {
+    foreach(scandir($dir) as $file) {
+        if ('.' === $file || '..' === $file) continue;
+        if (is_dir("$dir/$file")) rmdirRecursive("$dir/$file");
+        else unlink("$dir/$file");
+    }
+    rmdir($dir);
+}

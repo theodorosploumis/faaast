@@ -219,20 +219,21 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     if (file_exists($initial_compressed_path)) {
         //downloadFile($initial_compressed_path);
         rename($initial_compressed_path, $compressed_path);
-        rmdir($current_build_folder);
+        rmdirRecursive($current_build_folder);
         redirectTo($compressed_url);
         exit();
     }
 
-    if (file_exists($error_file_path)){
-        print(file_get_contents($error_file_path));
+    if (file_exists($error_initial_file_path)){
+        print(file_get_contents($error_initial_file_path));
+        rmdirRecursive($current_build_folder);
         //redirectTo($error_file_url);
         exit();
     } else {
-        rename($error_initial_file_path, $error_file_path);
-        rmdir($current_build_folder);
+        //rename($error_initial_file_path, $error_file_path);
         //redirectTo($error_file_url);
-        print(file_get_contents($error_file_path));
+        print(file_get_contents($error_initial_file_path));
+        rmdirRecursive($current_build_folder);
         exit();
     }
 
