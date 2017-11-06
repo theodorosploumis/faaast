@@ -161,17 +161,26 @@ function rmdirRecursive($dir) {
 }
 
 /**
- * @param string $filename
+ * @param $filename
+ * @return string
  */
-function filePrint($filename) {
+function fileWithLines($filename) {
     $file_lines = file($filename);
+    $result = "";
 
     foreach ($file_lines as $line_num => $line) {
         $line_num = $line_num + 1;
-        echo "{$line_num}: " . $line . "<br />";
+        $result .= "{$line_num}: " . $line . "<br />";
     }
+
+    return $result;
 }
 
+/**
+ * @param string $title
+ * @param string $body
+ * @return string
+ */
 function simpleHtml($title = "", $body = "") {
     $text = '<html><head>';
     $text .= '<link rel="stylesheet" href="css/style.css">';

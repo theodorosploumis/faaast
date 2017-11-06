@@ -221,7 +221,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     }
 
     if (file_exists($error_initial_file_path)){
-        print simpleHtml("An error occured", filePrint($error_initial_file_path));
+        print simpleHtml("An error occured", fileWithLines($error_initial_file_path));
         // Sleep 10s to allow cron change new folders owner
         sleep(10);
         chown($current_build_folder, "www-data");
@@ -231,7 +231,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     } else {
         //rename($error_initial_file_path, $error_file_path);
         //redirectTo($error_file_url);
-        print simpleHtml("An error occured", filePrint($error_initial_file_path));
+        print simpleHtml("An error occured", fileWithLines($error_initial_file_path));
         // Sleep 10s to allow cron change new folders owner
         sleep(10);
         chown($current_build_folder, "www-data");
