@@ -159,3 +159,11 @@ function rmdirRecursive($dir) {
     }
     rmdir($dir);
 }
+
+function filePrint($filename) {
+    $file_lines = file($filename);
+
+    foreach ($file_lines as $line_num => $line) {
+        echo "{$line_num}: " . $line . "<br />";
+    }
+}

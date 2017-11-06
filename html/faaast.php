@@ -224,7 +224,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     }
 
     if (file_exists($error_initial_file_path)){
-        print(file_get_contents($error_initial_file_path));
+        print(filePrint($error_initial_file_path));
         chown($current_build_folder, "www-data");
         rmdirRecursive($current_build_folder);
         //redirectTo($error_file_url);
@@ -232,7 +232,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     } else {
         //rename($error_initial_file_path, $error_file_path);
         //redirectTo($error_file_url);
-        print(file_get_contents($error_initial_file_path));
+        print(filePrint($error_initial_file_path));
         chown($current_build_folder, "www-data");
         rmdirRecursive($current_build_folder);
         // Run docker
