@@ -218,6 +218,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     // Move file into a new place/name
     if (file_exists($initial_compressed_path)) {
         //downloadFile($initial_compressed_path);
+        chown($current_build_folder, "www-data");
         rename($initial_compressed_path, $compressed_path);
         rmdirRecursive($current_build_folder);
         redirectTo($compressed_url);
@@ -226,6 +227,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
 
     if (file_exists($error_initial_file_path)){
         print(file_get_contents($error_initial_file_path));
+        chown($current_build_folder, "www-data");
         rmdirRecursive($current_build_folder);
         //redirectTo($error_file_url);
         exit();
@@ -233,6 +235,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
         //rename($error_initial_file_path, $error_file_path);
         //redirectTo($error_file_url);
         print(file_get_contents($error_initial_file_path));
+        chown($current_build_folder, "www-data");
         rmdirRecursive($current_build_folder);
         exit();
     }
