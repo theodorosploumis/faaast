@@ -208,11 +208,6 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     $workdir = " -w /home ";
     $docker = "docker run --rm " . $name . $workdir . $volumes . $error_volumes . $docker_image . $command;
 
-    // Run docker
-    if ($debug) {
-        debugConsole("Docker=" . $docker);
-    }
-
     exec($docker);
 
     // Move file into a new place/name
@@ -237,6 +232,10 @@ if (!file_exists($compressed_path) && $error == FALSE) {
         print(file_get_contents($error_initial_file_path));
         chown($current_build_folder, "www-data");
         rmdirRecursive($current_build_folder);
+        // Run docker
+        if ($debug) {
+            debugConsole("Docker=" . $docker);
+        }
         exit();
     }
 
