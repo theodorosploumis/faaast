@@ -225,11 +225,14 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     }
 
     if (file_exists($error_file_path)){
-        redirectTo($error_file_url);
+        print(file_get_contents($error_file_path));
+        //redirectTo($error_file_url);
+        exit();
     } else {
         rename($error_initial_file_path, $error_file_path);
         rmdir($current_build_folder);
-        redirectTo($error_file_url);
+        //redirectTo($error_file_url);
+        print(file_get_contents($error_file_path));
         exit();
     }
 

@@ -78,6 +78,10 @@ label {
   text-align: left;
 }
 
+.logo {
+  text-align: center;
+}
+
 #submit-button {
   background: #ff4500;
   color: #fff;

@@ -19,18 +19,19 @@ require_once __DIR__ . '/functions.php';
 </head>
 
 <body>
-<!--<img src="logo.png" class="logo">-->
 
-<h1>Faaast Download</h1>
+<div class="logo">
+    <img src="logo.png" title="Faaast logo">
+</div>
+
+<h1 class="hidden">Faaast Download</h1>
 
 <section class="wrapper">
 
     <p class="info">
         1. Type your "Command"<br>
         2. Select compress type<br>
-        3. Click "Download"<br>
-        4. Get the <a href="/builds">packaged file</a>
-        <br><br>
+        3. Click "Download"<br><br>
         <small>
             <a href="https://www.npmjs.com/">npm</a> |
             <a href="https://yarnpkg.com/">yarn</a> |
