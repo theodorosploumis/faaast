@@ -164,6 +164,7 @@ function filePrint($filename) {
     $file_lines = file($filename);
 
     foreach ($file_lines as $line_num => $line) {
+        $line_num = $line_num + 1;
         echo "{$line_num}: " . $line . "<br />";
     }
 }
