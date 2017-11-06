@@ -232,7 +232,19 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     } else {
         //rename($error_initial_file_path, $error_file_path);
         //redirectTo($error_file_url);
-        print(filePrint($error_initial_file_path));
+    print
+        '<html><head>
+        <link rel="stylesheet" href="css/style.css">
+        <link href="<?php print googleFonts(); ?>" rel="stylesheet">
+        </head><body>
+        <div class="logo"><a href="/"><img src="logo.png" title="Faaast logo"></a></div>
+        <h1 class="hidden">Faaast Download Error</h1>
+        <section class="wrapper">
+        <section class="faq"><h2>An error occured</h2><p>'. filePrint($error_initial_file_path) . '</p>
+        </section>
+        </section>
+        </body></html>';
+
         chown($current_build_folder, "www-data");
         rmdirRecursive($current_build_folder);
         // Run docker

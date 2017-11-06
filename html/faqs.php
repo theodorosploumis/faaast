@@ -15,11 +15,14 @@ require_once __DIR__ . '/functions.php';
 </head>
 
 <body>
-<h1>Faaast - FAQs</h1>
+
+<div class="logo">
+    <a href="/"><img src="logo.png" title="Faaast logo"></a>
+</div>
 
 <section class="wrapper">
 
-    <a href="/">Go to Homepage</a>
+    <h1>Faaast - FAQs</h1>
 
     <section class="faq">
         <h2>About</h2>
