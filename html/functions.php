@@ -160,6 +160,9 @@ function rmdirRecursive($dir) {
     rmdir($dir);
 }
 
+/**
+ * @param string $filename
+ */
 function filePrint($filename) {
     $file_lines = file($filename);
 
@@ -167,4 +170,23 @@ function filePrint($filename) {
         $line_num = $line_num + 1;
         echo "{$line_num}: " . $line . "<br />";
     }
+}
+
+function simpleHtml($title = "", $body = "") {
+    $text = '<html><head>';
+    $text .= '<link rel="stylesheet" href="css/style.css">';
+    $text .= '<link href="<?php print googleFonts(); ?>" rel="stylesheet">';
+    $text .= '</head><body>';
+    $text .= '<div class="logo"><a href="/"><img src="logo.png" title="Faaast logo"></a></div>';
+    $text .= '<h1 class="hidden">';
+    $text .= $title;
+    $text .= '</h1>';
+    $text .= '<section class="wrapper">';
+    $text .= '<section class="faq"><h2>';
+    $text .= $title;
+    $text .= '</h2><p>';
+    $text .= $body;
+    $text .= '</p></section></section></body></html>';
+
+    return $text;
 }
