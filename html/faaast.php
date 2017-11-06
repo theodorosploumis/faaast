@@ -210,9 +210,6 @@ if (!file_exists($compressed_path) && $error == FALSE) {
 
     exec($docker);
 
-    // Sleep 10s to allow cron change new folders owner
-    sleep(10);
-
     // Move file into a new place/name
     if (file_exists($initial_compressed_path)) {
         //downloadFile($initial_compressed_path);
@@ -225,6 +222,8 @@ if (!file_exists($compressed_path) && $error == FALSE) {
 
     if (file_exists($error_initial_file_path)){
         print simpleHtml("An error occured", filePrint($error_initial_file_path));
+        // Sleep 10s to allow cron change new folders owner
+        sleep(10);
         chown($current_build_folder, "www-data");
         rmdirRecursive($current_build_folder);
         //redirectTo($error_file_url);
@@ -233,6 +232,8 @@ if (!file_exists($compressed_path) && $error == FALSE) {
         //rename($error_initial_file_path, $error_file_path);
         //redirectTo($error_file_url);
         print simpleHtml("An error occured", filePrint($error_initial_file_path));
+        // Sleep 10s to allow cron change new folders owner
+        sleep(10);
         chown($current_build_folder, "www-data");
         rmdirRecursive($current_build_folder);
         // Run docker
