@@ -21,7 +21,7 @@ require_once __DIR__ . '/functions.php';
 <body>
 
 <div class="logo">
-    <img src="logo.png" title="Faaast logo">
+    <a href="/"><img src="logo.png" title="Faaast logo"></a>
 </div>
 
 <h1 class="hidden">Faaast Download</h1>
