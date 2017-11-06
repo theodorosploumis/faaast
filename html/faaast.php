@@ -199,8 +199,8 @@ if (!file_exists($compressed_path) && $error == FALSE) {
     $volumes = $cache . " -v " . $current_build_folder . ":/downloads ";
     
     // Error log etc
-    $error_volumes = " -v " . $current_build_folder . "/error:/error ";
-    $error_initial_file_path = $current_build_folder ."/error/" . $error_filename;
+    $error_volumes = " -v " . $current_build_folder . "error:/error ";
+    $error_initial_file_path = $current_build_folder ."error/" . $error_filename;
     $error_file_path = $error_files_path . $error_filename;
     $error_file_url = "https://" . $domain . "/builds/" . $id . "/error/" . $error_filename;
 
