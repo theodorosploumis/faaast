@@ -131,6 +131,8 @@ function footerMessage() {
     $text .= ' | ';
     $text .= "<a href='/faqs.php'>FAQs</a>";
     $text .= ' | ';
+    $text .= "<a href='https://github.com/theodorosploumis/faaast/'>GitHub</a>";
+    $text .= ' | ';
     $text .= 'Hosted on <a href="https://m.do.co/c/1123d0854c8f">DigitalOcean</a>';
 
     return $text;
