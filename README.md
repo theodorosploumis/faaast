@@ -43,7 +43,7 @@ docker run -it --rm -w /home -v $(pwd)/home:/home tplcom/faaast npm install visi
 | ied | 2.3.6 |
 | node | v8.9.0 |
 | npm | 5.5.1 |
-| pnpm | 1.19.3 |
+| pnpm | 1.19.5 |
 | python | 2.7.12 |
 | pip | 9.0.1 |
 | php | 7.0.22 |

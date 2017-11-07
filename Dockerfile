@@ -67,7 +67,8 @@ RUN wget -q https://github.com/drush-ops/drush/releases/download/8.1.15/drush.ph
 RUN apt-get clean && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists && \
-    rm -f /var/www/html/index.html
+    rm -f /var/www/html/index.html && \
+    npm cache --force clean
 
 # Create folders
 RUN mkdir /downloads /error
