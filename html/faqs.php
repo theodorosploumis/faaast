@@ -87,7 +87,7 @@ require_once __DIR__ . '/functions.php';
     </section>
 
     <section class="faq">
-        <h2>What is the software behind this?</h2>
+        <h2>Which is the software behind this?</h2>
 
         <p>
             I have built this tool as a proof of concept of a simple SaaS based on <b>Docker</b> and <b>php</b>.
