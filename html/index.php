@@ -15,6 +15,19 @@ require_once __DIR__ . '/functions.php';
     <link href="<?php print googleFonts(); ?>" rel="stylesheet">
     <?php print googleAnalytics($google_analytics_code); ?>
     <?php print shareThis($sharethis); ?>
+    <script type="text/javascript">
+      document.getElementById("submit-button").addEventListener('click',function(){
+        document.getElementById("running").style.display = "block";
+      });
+    </script>
+
+    <meta name="Description" content="A tiny tool that let's you package software on the cloud and download it. Useful for low bandwidth connections, testing etc.">
+    <meta name="Keywords" content="package manager, faaast, saas, docker">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@theoploumis">
+    <meta name="twitter:title" content="Faaast">
+    <meta name="twitter:description" content="A tiny tool that let's you package software on the cloud and download it. Useful for low bandwidth connections, testing etc.">
+
 </head>
 
 <body>
@@ -23,7 +36,7 @@ require_once __DIR__ . '/functions.php';
     <a href="/"><img src="logo.png" title="Faaast logo"></a>
 </div>
 
-<h1 class="hidden">Faaast Download</h1>
+<h1 class="hidden">Faaast - Packager as a Service</h1>
 
 <section class="wrapper">
 
