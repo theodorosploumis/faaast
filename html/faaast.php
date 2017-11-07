@@ -190,7 +190,6 @@ $compressed_url = "https://" . $domain . "/builds/" . $filename;
 if (file_exists($compressed_path)) {
     //downloadFile($compressed_path);
     redirectTo($compressed_url);
-    header('Location: https://' . $domain);
     exit();
 }
 
@@ -218,7 +217,6 @@ if (!file_exists($compressed_path) && $error == FALSE) {
         rename($initial_compressed_path, $compressed_path);
         rmdirRecursive($current_build_folder);
         redirectTo($compressed_url);
-        header('Location: https://' . $domain);
         exit();
     }
 

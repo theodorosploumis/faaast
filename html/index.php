@@ -71,10 +71,10 @@ require_once __DIR__ . '/functions.php';
             <option value="zip">zip</option>
         </select>
 
-        <div class="form-item" id="running">
+        <!-- <div class="form-item" id="running">
             <img src="loading.gif">
             <span> Packaging...</span>
-        </div>
+        </div> -->
 
         <input class="form-item" id="submit-button" type="submit" value="Download">
 
@@ -90,11 +90,11 @@ require_once __DIR__ . '/functions.php';
 
 <?php print infolinks($infolinks_pid); ?>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
   document.getElementById("submit-button").addEventListener('click',function(){
     document.getElementById("running").style.display = "block";
   });
-</script>
+</script> -->
 
 </body>
 
