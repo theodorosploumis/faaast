@@ -10,7 +10,7 @@ require_once __DIR__ . '/functions.php';
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Faaast Download</title>
+    <title>Faaast - Packager as a Service</title>
     <link rel="stylesheet" href="css/style.css">
     <link href="<?php print googleFonts(); ?>" rel="stylesheet">
     <?php print googleAnalytics($google_analytics_code); ?>
