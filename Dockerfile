@@ -9,6 +9,7 @@ RUN apt-get install -yqq \
     software-properties-common \
     zip \
     curl \
+    sudo \
     wget \
     git \
     python \
@@ -37,7 +38,7 @@ RUN apt-get install -yqq php7.0 \
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 
 RUN apt-get update && \
-    apt-get install nodejs
+    apt-get install -yqq nodejs build-essential
 
 # Upgrade pip
 RUN pip install --upgrade pip
@@ -46,8 +47,12 @@ RUN pip install --upgrade pip
 RUN gem install bundler --no-ri --no-rdoc && \
     echo "gem: --no-document" >> ~/.gemrc
 
-# Install yarn, pnpm, ied
-RUN /bin/bash -c "npm --quiet --no-progress install -g yarn pnpm ied"
+# Install yarn, ied
+RUN npm install -g --no-progress --quiet yarn ied
+
+#Install pnpm
+RUN curl -L https://unpkg.com/@pnpm/self-installer | node && \
+    pnpm install -g pnpm
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
@@ -63,7 +68,7 @@ RUN apt-get clean && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists && \
     rm -f /var/www/html/index.html
-    
+
 # Create folders
 RUN mkdir /downloads /error
 
