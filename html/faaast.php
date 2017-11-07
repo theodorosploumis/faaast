@@ -190,6 +190,7 @@ $compressed_url = "https://" . $domain . "/builds/" . $filename;
 if (file_exists($compressed_path)) {
     //downloadFile($compressed_path);
     redirectTo($compressed_url);
+    header('Location: https://' . $domain);
     exit();
 }
 
@@ -197,7 +198,7 @@ if (file_exists($compressed_path)) {
 if (!file_exists($compressed_path) && $error == FALSE) {
 
     $volumes = $cache . " -v " . $current_build_folder . ":/downloads ";
-    
+
     // Error log etc
     $error_volumes = " -v " . $current_build_folder . "error:/error ";
     $error_initial_file_path = $current_build_folder ."error/" . $error_filename;
@@ -217,6 +218,7 @@ if (!file_exists($compressed_path) && $error == FALSE) {
         rename($initial_compressed_path, $compressed_path);
         rmdirRecursive($current_build_folder);
         redirectTo($compressed_url);
+        header('Location: https://' . $domain);
         exit();
     }
 
