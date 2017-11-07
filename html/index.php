@@ -15,8 +15,6 @@ require_once __DIR__ . '/functions.php';
     <link href="<?php print googleFonts(); ?>" rel="stylesheet">
     <?php print googleAnalytics($google_analytics_code); ?>
     <?php print shareThis($sharethis); ?>
-    <?php print infolinks($infolinks_pid); ?>
-
 </head>
 
 <body>
@@ -79,6 +77,8 @@ require_once __DIR__ . '/functions.php';
         <?php print footerMessage(); ?>
     </p>
 </footer>
+
+<?php print infolinks($infolinks_pid); ?>
 
 </body>
 
