@@ -26,3 +26,6 @@ $google_analytics_code = "";
 
 // Sharethis property
 $sharethis = "";
+
+// Infolinks pid
+$infolinks_pid = "";
