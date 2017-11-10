@@ -218,22 +218,22 @@ function infolinks($infolinks_pid = "") {
 
 /**
  * @param boolean $error
- * @param string $result
+ * @param string $message
  * @param string $fileurl
  */
-function jsonResult($error = false, $result = "", $fileurl = "") {
+function jsonResult($error = false, $message = "", $fileurl = "") {
     header("Content-Type: application/json");
 
     if ($error) {
         $response = array(
             'status' => false,
-            'message' => $result
+            'message' => $message
         );
     } else {
         $response = array(
             'status' => true,
-            'message' => 'Success',
-            'data' => $fileurl
+            'message' => $message,
+            'file' => $fileurl
         );
     }
 
