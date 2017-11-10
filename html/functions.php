@@ -227,7 +227,8 @@ function jsonResult($error = false, $message = "", $fileurl = "") {
     if ($error) {
         $response = array(
             'status' => false,
-            'message' => $message
+            'message' => "An error occured",
+            'file' => $message
         );
     } else {
         $response = array(
