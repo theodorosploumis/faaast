@@ -13,7 +13,8 @@ $folder = "/home"; // Default folder to compress
 if (isset($_GET['api'])) {
     if ($_GET['api'] != 0) {
         $api = $_GET['api'];
-        $result = [];
+        print "API=" . $api;
+        exit();
     }
 }
 
@@ -134,9 +135,13 @@ if (isset($_GET['cmd'])) {
         break;
     }
 
-    if ($error == TRUE && $api == 0) {
-        echo $debug_message;
-        exit();
+    if ($error == TRUE) {
+        if ($api == 0) {
+            echo $debug_message;
+            exit();
+        } else {
+            jsonResult(true, $debug_message);
+        }
     }
 
     // Capture command output on a file and append the command
@@ -165,12 +170,15 @@ if (isset($_GET['cmd'])) {
     // $command .= $cmd_debug;
     $command .= '"';
 
-} else if ($api == 0) {
-    debugConsole("Command is not defined.");
-    $debug_message .= "ID is not defined";
 } else {
-    echo "ID is not defined";
-    exit();
+    $debug_message = "Command is not defined";
+    if ($api == 0) {
+        echo $debug_message;
+        exit();
+    } else {
+        jsonResult(true, $debug_message);
+    }
+
 }
 
 if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
@@ -180,11 +188,14 @@ if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
     if ($debug) {
         debugConsole("ID=" . $id);
     }
-} else if ($api == 0) {
-    $debug_message .= "ID is not defined";
 } else {
-    echo "ID is not defined";
-    exit();
+    $debug_message = "ID is not defined";
+    if ($api == 0) {
+        echo $debug_message;
+        exit();
+    } else {
+        jsonResult(true, $debug_message);
+    }
 }
 
 // Host files to create volumes
