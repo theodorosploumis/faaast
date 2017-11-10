@@ -11,7 +11,7 @@ $cache = ""; // Docker caches to use as volumes
 $folder = "/home"; // Default folder to compress
 
 if (isset($_GET['api'])) {
-    if ($_GET['api'] != 1) {
+    if ($_GET['api'] != 0) {
         $api = $_GET['api'];
     }
 }
@@ -28,10 +28,6 @@ $software = ["composer", "drush", "gem", "ied", "pip", "npm", "pnpm", "yarn"];
 // Get cmd from url
 if (isset($_GET['cmd'])) {
     $cmd = $_GET['cmd'];
-
-    if ($debug) {
-        debugConsole("Command=" . $cmd);
-    }
 
     $filename = normalizeString($cmd) . "." . $compress_method;
 
@@ -182,13 +178,10 @@ if (isset($_GET['cmd'])) {
 if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
     $id = $_GET['id'];
     $id = preg_replace('/[^a-z]/', '', $id);
-
-    if ($debug) {
-        debugConsole("ID=" . $id);
-    }
 } else {
     $debug_message = "ID is not defined";
     if ($api == 0) {
+        echo "API=" . $api;
         echo $debug_message;
         exit();
     } else {
@@ -260,7 +253,7 @@ if (file_exists($compressed_path)) {
                 //            redirectTo($error_file_url);
                 exit();
             } else {
-                jsonResult(true, fileWithLines($error_initial_file_path));
+                jsonResult(true,  fileWithLines($error_initial_file_path));
             }
         }
     }
