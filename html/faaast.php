@@ -13,8 +13,6 @@ $folder = "/home"; // Default folder to compress
 if (isset($_GET['api'])) {
     if ($_GET['api'] != 0) {
         $api = $_GET['api'];
-        print "API=" . $api;
-        exit();
     }
 }
 
