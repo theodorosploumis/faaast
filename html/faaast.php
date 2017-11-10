@@ -4,10 +4,18 @@ require_once __DIR__ . '/settings.php';
 require_once __DIR__ . '/functions.php';
 
 // General options
+$api = 0;
 $debug_message = "";
 $error = FALSE; // Boolean
 $cache = ""; // Docker caches to use as volumes
 $folder = "/home"; // Default folder to compress
+
+if (isset($_GET['api'])) {
+    if ($_GET['api'] != 0) {
+        $api = $_GET['api'];
+        $result = [];
+    }
+}
 
 if (isset($_GET['compress'])) {
     $compress_method = $_GET['compress'];
@@ -126,7 +134,7 @@ if (isset($_GET['cmd'])) {
         break;
     }
 
-    if ($error == TRUE) {
+    if ($error == TRUE && $api == 0) {
         echo $debug_message;
         exit();
     }
@@ -157,8 +165,10 @@ if (isset($_GET['cmd'])) {
     // $command .= $cmd_debug;
     $command .= '"';
 
-} else {
+} else if ($api == 0) {
     debugConsole("Command is not defined.");
+    $debug_message .= "ID is not defined";
+} else {
     echo "ID is not defined";
     exit();
 }
@@ -170,6 +180,8 @@ if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
     if ($debug) {
         debugConsole("ID=" . $id);
     }
+} else if ($api == 0) {
+    $debug_message .= "ID is not defined";
 } else {
     echo "ID is not defined";
     exit();
@@ -188,62 +200,63 @@ $compressed_url = "https://" . $domain . "/builds/" . $filename;
 
 // Download the file if exists
 if (file_exists($compressed_path)) {
-    //downloadFile($compressed_path);
-    redirectTo($compressed_url);
-    exit();
-}
 
-// Run docker and create the file if not exist
-if (!file_exists($compressed_path) && $error == FALSE) {
-
-    $volumes = $cache . " -v " . $current_build_folder . ":/downloads ";
-
-    // Error log etc
-    $error_volumes = " -v " . $current_build_folder . "error:/error ";
-    $error_initial_file_path = $current_build_folder ."error/" . $error_filename;
-    $error_file_path = $error_files_path . $error_filename;
-    $error_file_url = "https://" . $domain . "/builds/" . $id . "/error/" . $error_filename;
-
-    $name = " --name " . $id;
-    $workdir = " -w /home ";
-    $docker = "docker run --rm " . $name . $workdir . $volumes . $error_volumes . $docker_image . $command;
-
-    exec($docker);
-
-    // Move file into a new place/name
-    if (file_exists($initial_compressed_path)) {
-        //downloadFile($initial_compressed_path);
-        //chown($current_build_folder, "www-data");
-        rename($initial_compressed_path, $compressed_path);
-        rmdirRecursive($current_build_folder);
+    if ($api == 0) {
+        //downloadFile($compressed_path);
         redirectTo($compressed_url);
         exit();
-    }
-
-    if (file_exists($error_initial_file_path)){
-        print simpleHtml("An error occured", fileWithLines($error_initial_file_path));
-        // Sleep 10s to allow cron change new folders owner
-        sleep(10);
-        chown($current_build_folder, "www-data");
-        rmdirRecursive($current_build_folder);
-        //redirectTo($error_file_url);
-        exit();
     } else {
-        //rename($error_initial_file_path, $error_file_path);
-        //redirectTo($error_file_url);
-        print simpleHtml("An error occured", fileWithLines($error_initial_file_path));
-        // Sleep 10s to allow cron change new folders owner
-        sleep(10);
-        chown($current_build_folder, "www-data");
-        rmdirRecursive($current_build_folder);
-        // Run docker
-        if ($debug) {
-            debugConsole("Docker=" . $docker);
-        }
-        exit();
+        jsonResult(false,"File exists", $compressed_url);
     }
-
 } else {
-    print $debug_message;
-    exit();
+    if ($error == FALSE) {
+        // Run docker and create the file if not exist
+        $volumes = $cache . " -v " . $current_build_folder . ":/downloads ";
+
+        // Error log etc
+        $error_volumes = " -v " . $current_build_folder . "error:/error ";
+        $error_initial_file_path = $current_build_folder ."error/" . $error_filename;
+        $error_file_path = $error_files_path . $error_filename;
+        $error_file_url = "https://" . $domain . "/builds/" . $id . "/error/" . $error_filename;
+
+        $name = " --name " . $id;
+        $workdir = " -w /home ";
+        $docker = "docker run --rm " . $name . $workdir . $volumes . $error_volumes . $docker_image . $command;
+
+        exec($docker);
+
+        // Move file into a new place/name
+        if (file_exists($initial_compressed_path)) {
+            //chown($current_build_folder, "www-data");
+            rename($initial_compressed_path, $compressed_path);
+            rmdirRecursive($current_build_folder);
+
+            if ($api == 0) {
+                //downloadFile($initial_compressed_path);
+                redirectTo($compressed_url);
+                exit();
+            } else {
+                jsonResult(false,"File exists", $compressed_url);
+            }
+        }
+
+        // If error file exists show that error
+        if (file_exists($error_initial_file_path)){
+            if ($api == 0) {
+                print simpleHtml("An error occured", fileWithLines($error_initial_file_path));
+                // Sleep 10s to allow cron change new folders owner
+                //            sleep(10);
+                //            chown($current_build_folder, "www-data");
+                //            rmdirRecursive($current_build_folder);
+                //            redirectTo($error_file_url);
+                exit();
+            } else {
+                jsonResult(true, fileWithLines($error_initial_file_path));
+            }
+        }
+    }
 }
+
+print $debug_message;
+exit();
+

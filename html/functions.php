@@ -215,3 +215,28 @@ function infolinks($infolinks_pid = "") {
 
     return $text;
 }
+
+/**
+ * @param boolean $error
+ * @param string $result
+ * @param string $fileurl
+ */
+function jsonResult($error = false, $result = "", $fileurl = "") {
+    header("Content-Type: application/json");
+
+    if ($error) {
+        $response = array(
+            'status' => false,
+            'message' => $result
+        );
+    } else {
+        $response = array(
+            'status' => true,
+            'message' => 'Success',
+            'data' => $fileurl
+        );
+    }
+
+    echo json_encode($response);
+    exit();
+}
