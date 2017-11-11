@@ -250,7 +250,6 @@ if (file_exists($compressed_path)) {
                 //            sleep(10);
                 //            chown($current_build_folder, "www-data");
                 //            rmdirRecursive($current_build_folder);
-                //            redirectTo($error_file_url);
                 exit();
             } else {
                 jsonResult(true,  fileWithLines($error_initial_file_path));

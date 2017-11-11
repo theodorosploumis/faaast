@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
+
 # Post requests to https://faaast.download to get packaged files from the cli
+# Example: faaast "npm install react"
+# See the FAQs: https://faaast.download/faqs.php
 function faaast(){
     COMMAND=$1
 
     if [[ -z "$1" ]];
         then
         echo -e "Command not set";
+        echo -e "You must include the command within quotes!";
+        echo -e "Example: faaast \"npm install react\"";
         return;
     fi
 
@@ -15,8 +20,6 @@ function faaast(){
     echo -e "Posting to ${URL}";
 
     FILE=$(curl -s "$URL" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["'file'"]';)
-
-    return;
 
     if [[ "$FILE" != "An error occured" ]];
         then
