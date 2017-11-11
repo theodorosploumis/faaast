@@ -245,7 +245,7 @@ if (file_exists($compressed_path)) {
         // If error file exists show that error
         if (file_exists($error_initial_file_path)){
             if ($api == 0) {
-                print simpleHtml("An error occured", fileWithLines($error_initial_file_path), "<br>");
+                print simpleHtml("An error occured", fileWithLines($error_initial_file_path, "<br>"));
                 // Sleep 10s to allow cron change new folders owner
                 //            sleep(10);
                 //            chown($current_build_folder, "www-data");
