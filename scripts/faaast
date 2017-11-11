@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# Post requests to https://faaast.download to get packaged files from the cli
 function faaast(){
     COMMAND=$1
 
@@ -16,7 +16,6 @@ function faaast(){
 
     FILE=$(curl -s "$URL" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["'file'"]';)
 
-    echo -e "$FILE";
     return;
 
     if [[ "$FILE" != "An error occured" ]];
@@ -27,4 +26,3 @@ function faaast(){
     fi
 
 }
-

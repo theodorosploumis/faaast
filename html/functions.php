@@ -172,7 +172,9 @@ function fileWithLines($filename) {
 
     foreach ($file_lines as $line_num => $line) {
         $line_num = $line_num + 1;
-        $result .= "{$line_num}: " . $line . "\n";
+        if ($line) {
+            $result .= "{$line_num}: " . $line . "\n";
+        }
     }
 
     return $result;
