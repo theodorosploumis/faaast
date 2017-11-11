@@ -3,29 +3,26 @@
 # Post requests to https://faaast.download to get packaged files from the cli
 # Example: faaast "npm install react"
 # See the FAQs: https://faaast.download/faqs.php
-function faaast(){
-    COMMAND=$1
+COMMAND=$1
 
-    if [[ -z "$1" ]];
-        then
-        echo -e "Command not set";
-        echo -e "You must include the command within quotes!";
-        echo -e "Example: faaast \"npm install react\"";
-        return;
-    fi
+if [[ -z "$1" ]];
+    then
+    echo -e "Command not set";
+    echo -e "You must include the command within quotes!";
+    echo -e "Example: faaast \"npm install react\"";
+    exit;
+fi
 
-    ID=$(cat /dev/urandom | tr -dc 'a-z' | fold -w 20 | head -n 1)
-    URL="https://faaast.download/faaast.php?cmd=${COMMAND// /+}&id=${ID}&api=1"
+ID=$(cat /dev/urandom | tr -dc 'a-z' | fold -w 20 | head -n 1)
+URL="https://faaast.download/faaast.php?cmd=${COMMAND// /+}&id=${ID}&api=1"
 
-    echo -e "Posting to ${URL}";
+echo -e "Posting to ${URL}";
 
-    FILE=$(curl -s "$URL" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["'file'"]';)
+FILE=$(curl -s "$URL" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["'file'"]';)
 
-    if [[ "$FILE" != "An error occured" ]];
-        then
-            wget "$FILE";
-        else
-            print "An error occured";
-    fi
-
-}
+if [[ "$FILE" != "An error occured" ]];
+    then
+        wget "$FILE";
+    else
+        print "An error occured";
+fi
