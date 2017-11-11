@@ -7,8 +7,7 @@ Status](https://img.shields.io/docker/build/tplcom/faaast.svg)](https://hub.dock
 
 A package manager as a service (SaaS).
 
-Or a package software with **npm, pnpm, yarn, ied, gem, composer, bundler, drush, pip etc** using
- Docker.
+Or a package software with **npm, pnpm, yarn, ied, gem, composer, bundler, drush, pip etc** using Docker.
 
 ## Why
 
@@ -33,13 +32,14 @@ docker run -it --rm -w /home -v $(pwd)/home:/home tplcom/faaast npm install visi
 ```
 
 - Use cli to get the packaged (tar.gz or zip) files using wget, curl and python as simple as calling the simple HTTP api.
+You can also use the ready function **faaast** from the [bash script](https://raw.githubusercontent.com/theodorosploumis/faaast/master/scripts/faaast). 
 
 ```bash
-wget $(curl -s "https://faaast.download/faaast.php?[MY_COMMAND]&id=[RANDOM_20_LETTERS]&compress=tar.gz&api=true" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["'file'"]';)
+wget $(curl -s "https://faaast.download/faaast.php?cmd=[MY_COMMAND]&id=[RANDOM_20_LETTERS]&compress=tar.gz&api=true" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["'file'"]';)
 
 # Example
 
-wget $(curl -s "https://faaast.download/faaast.php?cmd=npm+install+webpack&id=ddddddddddeeeeeeeeee&compress=tar.gz&api=1" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["'file'"]';)
+wget $(curl -s "https://faaast.download/faaast.php?cmd=npm+install+webpack&id=ddddddddddeeeeeeeeee&api=1" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["'file'"]';)
 
 ```
 

@@ -88,8 +88,6 @@ require_once __DIR__ . '/functions.php';
     </p>
 </footer>
 
-<?php print infolinks($infolinks_pid); ?>
-
 <!-- <script type="text/javascript">
   document.getElementById("submit-button").addEventListener('click',function(){
     document.getElementById("running").style.display = "block";

@@ -42,20 +42,20 @@ if (isset($_GET['cmd'])) {
     //  $cmd_following = $cmd_array; // eg react-native (package name)
 
     if (!in_array($cmd_software, $software)) {
-        $debug_message .= 'Command ' . $cmd_software . ' is not supported.<br>';
+        $debug_message .= 'Command ' . $cmd_software . ' is not supported.\n';
         $error = TRUE;
     }
 
     if (stringContains($cmd, [";", "||", "& ", "&&"])) {
-        $debug_message .= 'Chained commands are not supported.<br>';
+        $debug_message .= 'Chained commands are not supported.\n';
         $error = TRUE;
     }
 
     switch ($cmd_software) {
     case "gem":
         if (!in_array($cmd_command, ["install"])) {
-            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
-            $debug_message .= " Use 'gem install'.<br>";
+            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+            $debug_message .= " Use 'gem install'.\n";
             $error = TRUE;
         }
         $cmd = $cmd . " --install-dir /home";
@@ -64,8 +64,8 @@ if (isset($_GET['cmd'])) {
 
     case "pip":
         if (!in_array($cmd_command, ["install"])) {
-            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
-            $debug_message .= " Use 'pip install'.<br>";
+            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+            $debug_message .= " Use 'pip install'.\n";
             $error = TRUE;
         }
         $cmd = $cmd . " --target=/home";
@@ -74,8 +74,8 @@ if (isset($_GET['cmd'])) {
 
     case "npm":
         if (!in_array($cmd_command, ["install", "add"])) {
-            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
-            $debug_message .= " Use 'npm install/add'.<br>";
+            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+            $debug_message .= " Use 'npm install/add'.\n";
             $error = TRUE;
         }
         $cmd = $cmd_software . " set progress=false; " . $cmd . " --silent";
@@ -84,8 +84,8 @@ if (isset($_GET['cmd'])) {
 
     case "yarn":
         if (!in_array($cmd_command, ["add"])) {
-            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
-            $debug_message .= "Use 'yarn add'.<br>";
+            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+            $debug_message .= "Use 'yarn add'.\n";
             $error = TRUE;
         }
         $cmd = $cmd . " --no-progress --silent --prefer-online --ignore-optional --non-interactive";
@@ -94,8 +94,8 @@ if (isset($_GET['cmd'])) {
 
     case "pnpm":
         if ($cmd_command != "install") {
-            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
-            $debug_message .= " Use 'pnpm install'.<br>";
+            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+            $debug_message .= " Use 'pnpm install'.\n";
             $error = TRUE;
         }
         $cmd = "echo '{}' > package.json && " . $cmd;
@@ -103,7 +103,7 @@ if (isset($_GET['cmd'])) {
 
     case "ied":
         if ($cmd_command != "install") {
-            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
+            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
             $debug_message .= " Use 'ied install'.<br`>";
             $error = TRUE;
         }
@@ -111,8 +111,8 @@ if (isset($_GET['cmd'])) {
 
     case "composer":
         if (!in_array($cmd_command, ["require", "create-project"])) {
-            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
-            $debug_message .= "Use 'composer require/create-project'.<br>";
+            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+            $debug_message .= "Use 'composer require/create-project'.\n";
             $error = TRUE;
         }
         $cmd = $cmd . " --quiet --no-ansi --no-interaction --working-dir=/home";
@@ -121,8 +121,8 @@ if (isset($_GET['cmd'])) {
 
     case "drush":
         if (!in_array($cmd_command, ["pm-download", "dl"])) {
-            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.<br>";
-            $debug_message .= " Use 'drush dl/pm-download'.<br>";
+            $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+            $debug_message .= " Use 'drush dl/pm-download'.\n";
             $error = TRUE;
         }
         $cache = " -v /caches/drush:/.drush/cache/download";

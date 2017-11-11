@@ -172,7 +172,7 @@ function fileWithLines($filename) {
 
     foreach ($file_lines as $line_num => $line) {
         $line_num = $line_num + 1;
-        $result .= "{$line_num}: " . $line . "<br />";
+        $result .= "{$line_num}: " . $line . "\n";
     }
 
     return $result;
@@ -198,20 +198,6 @@ function simpleHtml($title = "", $body = "") {
     $text .= '</h2><p>';
     $text .= $body;
     $text .= '</p></section></section></body></html>';
-
-    return $text;
-}
-
-/**
- * @param string $infolinks_pid
- * @return string
- */
-function infolinks($infolinks_pid = "") {
-    $text = '<script type="text/javascript">';
-    $text .= 'var infolinks_pid=';
-    $text .= $infolinks_pid;
-    $text .= ';var infolinks_wsid = 0;</script>';
-    $text .= '<script type="text/javascript" src="//resources.infolinks.com/js/infolinks_main.js"></script>';
 
     return $text;
 }

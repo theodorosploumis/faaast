@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+function faaast(){
+    COMMAND=$1
+
+    if [[ -z "$1" ]];
+        then
+        echo -e "Command not set";
+        return;
+    fi
+
+    ID=$(cat /dev/urandom | tr -dc 'a-z' | fold -w 20 | head -n 1)
+    URL="https://faaast.download/faaast.php?cmd=${COMMAND// /+}&id=${ID}&api=1"
+
+    echo -e "Posting to ${URL}";
+
+    FILE=$(curl -s "$URL" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["'file'"]';)
+
+    echo -e "$FILE";
+    return;
+
+    if [[ "$FILE" != "An error occured" ]];
+        then
+            wget "$FILE";
+        else
+            print "An error occured";
+    fi
+
+}
+
