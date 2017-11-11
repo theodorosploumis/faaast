@@ -172,7 +172,7 @@ function fileWithLines($filename) {
 
     foreach ($file_lines as $line_num => $line) {
         $line_num = $line_num + 1;
-        if ($line) {
+        if (trim($line) != "") {
             $result .= "{$line_num}: " . $line . "\n";
         }
     }
