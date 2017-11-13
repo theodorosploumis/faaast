@@ -14,6 +14,7 @@ RUN apt-get install -yqq \
     git \
     python \
     python-dev \
+    python3-dev \
     python-pip \
     python3-pip \
     python-software-properties \

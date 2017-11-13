@@ -68,7 +68,7 @@ if (isset($_GET['cmd'])) {
             $debug_message .= " Use 'pip install'.\n";
             $error = TRUE;
         }
-        $cmd = $cmd . " --target=/home";
+        $cmd = $cmd . " --target=/home --no-cache-dir";
         $cache = " -v /caches/pip:/root/.cache/pip";
         break;
     
@@ -78,7 +78,7 @@ if (isset($_GET['cmd'])) {
           $debug_message .= " Use 'pip3 install'.\n";
           $error = TRUE;
         }
-        $cmd = $cmd . " --target=/home";
+        $cmd = $cmd . " --target=/home --no-cache-dir";
         $cache = " -v /caches/pip:/root/.cache/pip";
         break;
 
