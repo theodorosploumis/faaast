@@ -27,6 +27,6 @@ if [[ "$FILE" != "An error occured" ]];
     then
         wget "$FILE";
     else
-        print -e "An error occured";
-        print -e "See more at $WEB_URL"
+        echo -e "An error occured";
+        echo -e "See more at ${WEB_URL}";
 fi
