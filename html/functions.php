@@ -168,8 +168,6 @@ function fileWithLines($filename, $separator = "\n") {
   $result = "";
   $number = 0;
   
-  $result .= "<div class='error'>";
-  
   foreach ($file_lines as $line_num => $line) {
     if (trim($line) != "") {
       $number += 1;
@@ -177,8 +175,6 @@ function fileWithLines($filename, $separator = "\n") {
       $result .= $separator;
     }
   }
-  
-  $result .= "</div>";
   
   return $result;
 }
@@ -201,7 +197,7 @@ function simpleHtml($title = "", $body = "") {
   $text .= '<section class="faq"><h2>';
   $text .= $title;
   $text .= '</h2>';
-  $text .= $body;
+  $text .= '<div class="error">'. $body . '</div>';
   $text .= '</section></section></body></html>';
   
   return $text;
