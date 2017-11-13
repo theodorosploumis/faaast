@@ -282,6 +282,9 @@ else {
       }
       else {
         jsonResult(TRUE, fileWithLines($error_initial_file_path));
+        sleep(10);
+        rmdirRecursive($current_build_folder);
+        exit();
       }
     }
   }
