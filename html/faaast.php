@@ -239,10 +239,9 @@ if (file_exists($compressed_path)) {
 
         // Move file into a new place/name
         if (file_exists($initial_compressed_path)) {
-            //chown($current_build_folder, "www-data");
             rename($initial_compressed_path, $compressed_path);
+            sleep(10);
             rmdirRecursive($current_build_folder);
-
             if ($api == 0) {
                 //downloadFile($initial_compressed_path);
                 redirectTo($compressed_url);
@@ -257,9 +256,8 @@ if (file_exists($compressed_path)) {
             if ($api == 0) {
                 print simpleHtml("An error occured", fileWithLines($error_initial_file_path, "<br>"));
                 // Sleep 10s to allow cron change new folders owner
-                //            sleep(10);
-                //            chown($current_build_folder, "www-data");
-                //            rmdirRecursive($current_build_folder);
+                sleep(10);
+                rmdirRecursive($current_build_folder);
                 exit();
             } else {
                 jsonResult(true,  fileWithLines($error_initial_file_path));

@@ -43,7 +43,8 @@ cp /var/www/html/settings.default.php /var/www/html/settings.php
 curl https://releases.rancher.com/install-docker/17.06.sh | sh
 
 # Allow user www-data to run docker
-echo "www-data ALL=NOPASSWD: /usr/bin/docker" >> /etc/sudoers
+#echo "www-data ALL=NOPASSWD: /usr/bin/docker" >> /etc/sudoers
+usermod -aG docker www-data
 
 # Start Portainer dashboard on port 9988
 if [ "${INSTALL_PORTAINER}" -eq "1" ]; then
