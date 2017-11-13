@@ -215,6 +215,14 @@ if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
   }
 }
 
+// Host files to create volumes
+$current_build_folder = $builds_files_path . $id . "/"; // the folder that will be volumed
+$current_error_folder = $error_files_path . $id;
+
+if (!file_exists($current_build_folder)) {
+  mkdir($current_build_folder, 0777);
+}
+
 // If error is set show error result immediately
 if (isset($_GET["error"]) && file_exists($error_initial_file_path)) {
   if ($api == 0) {
@@ -225,14 +233,6 @@ if (isset($_GET["error"]) && file_exists($error_initial_file_path)) {
     jsonResult(TRUE, fileWithLines($error_initial_file_path));
     exit();
   }
-}
-
-// Host files to create volumes
-$current_build_folder = $builds_files_path . $id . "/"; // the folder that will be volumed
-$current_error_folder = $error_files_path . $id;
-
-if (!file_exists($current_build_folder)) {
-  mkdir($current_build_folder, 0777);
 }
 
 // Initial and final (desirable) packaged file path
