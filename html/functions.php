@@ -172,7 +172,6 @@ function fileWithLines($filename, $separator = "\n") {
     if (trim($line) != "") {
       $number += 1;
       $result .= "{$number}: " . $line . $separator;
-      $result .= $separator;
     }
   }
   
