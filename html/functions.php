@@ -133,7 +133,7 @@ function footerMessage() {
     $text .= ' | ';
     $text .= "<a href='https://github.com/theodorosploumis/faaast/'>GitHub</a>";
     $text .= ' | ';
-    $text .= 'Hosted on <a href="https://m.do.co/c/1123d0854c8f">DigitalOcean</a>';
+    $text .= 'Hosted on <a href="https://www.vultr.com/?ref=7258956">Vultr.com</a>';
 
     return $text;
 }

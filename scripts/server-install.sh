@@ -57,9 +57,6 @@ if [ "${INSTALL_PORTAINER}" -eq "1" ]; then
          portainer/portainer
 fi
 
-# Install DogitalOcean monitoring
-curl -sSL https://agent.digitalocean.com/install.sh | sh
-
 # Link extra aliases
 touch ~/.bashrc
 echo "if [ -f /var/www/scripts/.aliases ]; then" >> ~/.bashrc
@@ -77,4 +74,4 @@ service apache2 reload
 
 # Manually actions
 # Set timezone
-#dpkg-reconfigure tzdata
+echo -n "Run: dpkg-reconfigure tzdata"
