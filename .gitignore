@@ -1,5 +1,6 @@
 # Ignore
 .idea
+/error
 /html/vendor
 /html/builds
 /html/settings.php

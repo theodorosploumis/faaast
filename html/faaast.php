@@ -201,6 +201,8 @@ if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
 
 // Host files to create volumes
 $current_build_folder = $builds_files_path . $id . "/"; // the folder that will be volumed
+$current_error_folder = $error_files_path . $id;
+
 if (!file_exists($current_build_folder)) {
     mkdir($current_build_folder,0777);
 }
@@ -226,11 +228,9 @@ if (file_exists($compressed_path)) {
         $volumes = $cache . " -v " . $current_build_folder . ":/downloads ";
 
         // Error log etc
-        $error_volumes = " -v " . $current_build_folder . "error:/error ";
-        $error_initial_file_path = $current_build_folder ."error/" . $error_filename;
-        $error_file_path = $error_files_path . $error_filename;
-        $error_file_url = "https://" . $domain . "/builds/" . $id . "/error/" . $error_filename;
-
+        $error_volumes = " -v " . $current_error_folder . ":/error ";
+        $error_initial_file_path = $current_error_folder . "/" . $error_filename;
+        
         $name = " --name " . $id;
         $workdir = " -w /home ";
         $docker = "docker run --rm " . $name . $workdir . $volumes . $error_volumes . $docker_image . $command;

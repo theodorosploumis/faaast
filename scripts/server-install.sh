@@ -29,8 +29,8 @@ rm -rf /var/www
 git clone https://github.com/theodorosploumis/faaast.git /var/www/
 
 # Create several helpful folders
-mkdir /var/www/html/builds
-chown -R www-data:www-data /var/www/html/builds
+mkdir /var/www/html/builds /var/www/error
+chown -R www-data:www-data /var/www/html/builds /var/www/error
 
 # Setup cron task
 chmod +x /var/www/scripts/cron_tasks.sh
