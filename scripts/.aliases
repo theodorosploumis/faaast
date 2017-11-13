@@ -30,7 +30,7 @@ function docker-rm-volumes() {
 }
 
 # Update git repo
-alias git-update="cd /var/www/ && git pull"
+alias git-update="cd /var/www/ && git pull && chown www-data /var/www/html/*"
 
 # Docker stats
 alias docker-stats="docker ps -q | xargs  docker stats --no-stream"
