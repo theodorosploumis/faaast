@@ -34,7 +34,7 @@ require_once __DIR__ . '/functions.php';
 
 <div class="logo">
     <a href="/"><img src="logo.png" title="Faaast logo"></a>
-    <a class="gh-stars">
+    <div class="gh-stars">
         <a href="https://hub.docker.com/r/tplcom/faaast/"><img src="https://img.shields.io/docker/stars/tplcom/faaast.svg?style=plastic"></a>
         <a href="https://github.com/theodorosploumis/faaast/"><img src="https://img.shields.io/github/stars/theodorosploumis/faaast.svg?style=social&label=Stars&style=plastic"></a>
     </div>
