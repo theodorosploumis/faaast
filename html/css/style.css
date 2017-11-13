@@ -76,6 +76,15 @@ label {
 
 .error {
   text-align: left;
+  font-size: 13px;
+  background: #fff;
+  padding: 10px;
+  font-family: "Cutive Mono", monospace;
+  line-height: 18px;
+}
+
+.error-wrapper {
+  max-width: 800px;
 }
 
 .logo {

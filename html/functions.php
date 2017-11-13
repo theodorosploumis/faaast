@@ -119,7 +119,7 @@ function shareThis($id) {
  * @return string
  */
 function googleFonts() {
-    return "https://fonts.googleapis.com/css?family=Lato|Source+Sans+Pro:300,400";
+    return "https://fonts.googleapis.com/css?family=Cutive+Mono|Lato|Source+Sans+Pro:300,400";
 }
 
 /**
@@ -160,6 +160,8 @@ function rmdirRecursive($dir) {
 function fileWithLines($filename, $separator = "\n") {
     $file_lines = file($filename);
     $result = "";
+    
+    $result .= "<div class='error'>";
 
     foreach ($file_lines as $line_num => $line) {
         $line_num = $line_num + 1;
@@ -167,6 +169,8 @@ function fileWithLines($filename, $separator = "\n") {
             $result .= "{$line_num}: " . $line . $separator;
         }
     }
+  
+    $result .= "</div>";
 
     return $result;
 }
@@ -179,18 +183,18 @@ function fileWithLines($filename, $separator = "\n") {
 function simpleHtml($title = "", $body = "") {
     $text = '<html><head>';
     $text .= '<link rel="stylesheet" href="css/style.css">';
-    $text .= '<link href="<?php print googleFonts(); ?>" rel="stylesheet">';
+    $text .= '<link href="'. googleFonts() . '" rel="stylesheet">';
     $text .= '</head><body>';
     $text .= '<div class="logo"><a href="/"><img src="logo.png" title="Faaast logo"></a></div>';
     $text .= '<h1 class="hidden">';
     $text .= $title;
     $text .= '</h1>';
-    $text .= '<section class="wrapper">';
+    $text .= '<section class="wrapper error-wrapper">';
     $text .= '<section class="faq"><h2>';
     $text .= $title;
-    $text .= '</h2><p>';
+    $text .= '</h2>';
     $text .= $body;
-    $text .= '</p></section></section></body></html>';
+    $text .= '</section></section></body></html>';
 
     return $text;
 }
