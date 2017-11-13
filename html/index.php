@@ -17,15 +17,17 @@ require_once __DIR__ . '/functions.php';
     <meta name="twitter:site" content="@theoploumis">
     <meta name="twitter:title" content="Faaast">
     <meta name="twitter:description"
-          content="A tiny tool that let's you package software on the cloud and download it. Useful for low bandwidth connections, testing etc.">
+          content="A tiny tool that let's you package software on the cloud and
+          download it. Useful for low bandwidth connections, testing etc.">
 
     <title>Faaast - Packager as a Service</title>
 
     <link rel="stylesheet" href="css/style.css">
 
     <link href="<?php print googleFonts(); ?>" rel="stylesheet">
-  <?php print googleAnalytics($google_analytics_code); ?>
-  <?php print shareThis($sharethis); ?>
+    <?php print googleAnalytics($google_analytics_code); ?>
+    <?php print shareThis($sharethis); ?>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 </head>
 
@@ -33,6 +35,8 @@ require_once __DIR__ . '/functions.php';
 
 <div class="logo">
     <a href="/"><img src="logo.png" title="Faaast logo"></a>
+    <a class="github-button" href="https://github.com/theodorosploumis/faaast"
+       data-show-count="true" aria-label="Star theodorosploumis/faaast on GitHub">Star</a>
 </div>
 
 <h1 class="hidden">Faaast - Packager as a Service</h1>
