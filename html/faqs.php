@@ -105,14 +105,16 @@ require_once __DIR__ . '/functions.php';
             - drush 8.1.15<br>
             - gem 2.5.1<br>
             - ied 2.3.6<br>
-            - node v8.9.0<br>
+            - node v8.9.1<br>
             - npm 5.5.1<br>
-            - pnpm 1.19.3<br>
+            - pnpm 1.20.0<br>
             - python 2.7.12<br>
+            - python3 3.5.2<br>
             - pip 9.0.1<br>
+            - pip3 9.0.1<br>
             - php 7.0.22<br>
             - ruby 2.3.1p112<br>
-            - yarn 1.2.1<br>
+            - yarn 1.3.2<br>
             </small>
         </p>
     </section>

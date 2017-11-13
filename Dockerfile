@@ -15,13 +15,15 @@ RUN apt-get install -yqq \
     python \
     python-dev \
     python-pip \
+    python3-pip \
     python-software-properties \
     ruby-all-dev \
     sqlite3 \
     zlib1g-dev
 
 # Install PHP
-RUN apt-get install -yqq php7.0 \
+RUN apt-get update -y && \
+    apt-get install -yqq php7.0 \
     php7.0-cli \
     php7.0-curl \
     php7.0-common \
@@ -74,7 +76,8 @@ RUN apt-get clean && \
 RUN mkdir /downloads /error
 
 # Copy useful files
-COPY faast.readme.txt command.log /error/
+COPY command.log /error/
+COPY faast.readme.txt /home
 
 WORKDIR /home
 

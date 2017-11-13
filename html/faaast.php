@@ -71,6 +71,16 @@ if (isset($_GET['cmd'])) {
         $cmd = $cmd . " --target=/home";
         $cache = " -v /caches/pip:/root/.cache/pip";
         break;
+    
+    case "pip3":
+        if (!in_array($cmd_command, ["install"])) {
+          $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+          $debug_message .= " Use 'pip3 install'.\n";
+          $error = TRUE;
+        }
+        $cmd = $cmd . " --target=/home";
+        $cache = " -v /caches/pip:/root/.cache/pip";
+        break;
 
     case "npm":
         if (!in_array($cmd_command, ["install", "add"])) {

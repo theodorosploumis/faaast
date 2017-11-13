@@ -139,18 +139,6 @@ function footerMessage() {
 }
 
 /**
- * @param $data
- */
-function debugConsole($data) {
-    $output = $data;
-    if (is_array($output)) {
-        $output = implode( ',', $output);
-    }
-
-    echo "<script>console.log( 'Debug: " . $output . "' );</script>";
-}
-
-/**
  * @param string $dir
  */
 function rmdirRecursive($dir) {

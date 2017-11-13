@@ -49,7 +49,7 @@ require_once __DIR__ . '/functions.php';
             <a href="https://rubygems.org/">gem</a> |
             <a href="https://getcomposer.org">composer</a> |
             <a href="https://github.com/drush-ops/drush">drush</a> |
-            <a href="https://pip.pypa.io/">pip</a>
+            <a href="https://pip.pypa.io/">pip/pip3</a>
         </small>
     </p>
 
@@ -79,6 +79,8 @@ require_once __DIR__ . '/functions.php';
         <input class="form-item" id="submit-button" type="submit" value="Download">
 
     </form>
+    
+    <p>Prefer the <b>cli</b>? Get it <a href="https://github.com/theodorosploumis/faaast#cli-tool">here</a>.</p>
 
 </section>
 

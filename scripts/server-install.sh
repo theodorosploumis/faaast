@@ -5,9 +5,6 @@
 INSTALL_LETSENCYPT=0
 INSTALL_PORTAINER=1
 
-# Change timezone manually
-#dpkg-reconfigure tzdata
-
 # Generic software
 apt-get -qqy update
 apt-get install -y \
@@ -65,8 +62,8 @@ curl -sSL https://agent.digitalocean.com/install.sh | sh
 
 # Link extra aliases
 touch ~/.bashrc
-echo "if [ -f /var/www/scripts/.docker-aliases ]; then" >> ~/.bashrc
-echo ". /var/www/scripts/.docker-aliases" >> ~/.bashrc
+echo "if [ -f /var/www/scripts/.aliases ]; then" >> ~/.bashrc
+echo ". /var/www/scripts/.aliases" >> ~/.bashrc
 echo "fi" >> ~/.bashrc
 source ~/.bashrc
 
@@ -77,3 +74,7 @@ mkdir -p /caches/pip /caches/composer /caches/gem /caches/npm /caches/yarn /cach
 apt-get autoremove
 
 service apache2 reload
+
+# Manually actions
+# Set timezone
+#dpkg-reconfigure tzdata
