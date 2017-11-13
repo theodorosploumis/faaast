@@ -15,10 +15,9 @@ fi
 
 ID=$(cat /dev/urandom | tr -dc 'a-z' | fold -w 20 | head -n 1)
 URL="https://faaast.download/faaast.php?cmd=${COMMAND// /+}&id=${ID}&api=1"
-WEB_URL="https://faaast.download/faaast.php?cmd=${COMMAND// /+}&id=${ID}"
+ERROR_URL="https://faaast.download/faaast.php?cmd=${COMMAND// /+}&id=${ID}&error=true"
 
 echo -e "Posting to ${URL}";
-echo -e "";
 echo -e "";
 
 FILE=$(curl -s "$URL" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["'file'"]';)
@@ -28,5 +27,5 @@ if [[ "$FILE" != "An error occured" ]];
         wget "$FILE";
     else
         echo -e "An error occured";
-        echo -e "See more at ${WEB_URL}";
+        echo -e "See more at ${ERROR_URL}";
 fi

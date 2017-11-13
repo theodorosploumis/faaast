@@ -47,6 +47,7 @@ if (isset($_GET['cmd'])) {
   $cmd_command = strtolower($cmd_array[1]); // eg install
   
   $error_filename = normalizeString($cmd) . ".error.log";
+  $error_initial_file_path = $current_error_folder . "/" . $error_filename;
   
   //  unset($cmd_array[0]);
   //  unset($cmd_array[1]);
@@ -157,6 +158,7 @@ if (isset($_GET['cmd'])) {
     }
     else {
       jsonResult(TRUE, $debug_message);
+      exit();
     }
   }
   
@@ -187,8 +189,7 @@ if (isset($_GET['cmd'])) {
   // $command .= $cmd_debug;
   $command .= '"';
   
-}
-else {
+} else {
   $debug_message = "Command is not defined";
   if ($api == 0) {
     echo $debug_message;
@@ -197,14 +198,12 @@ else {
   else {
     jsonResult(TRUE, $debug_message);
   }
-  
 }
 
 if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
   $id = $_GET['id'];
   $id = preg_replace('/[^a-z]/', '', $id);
-}
-else {
+} else {
   $debug_message = "ID is not defined";
   if ($api == 0) {
     echo "API=" . $api;
@@ -213,6 +212,18 @@ else {
   }
   else {
     jsonResult(TRUE, $debug_message);
+  }
+}
+
+// If error is set show error result immediately
+if (isset($_GET["error"]) && file_exists($error_initial_file_path)) {
+  if ($api == 0) {
+    print simpleHtml("An error occured", fileWithLines($error_initial_file_path, "<br>"));
+    exit();
+  }
+  else {
+    jsonResult(TRUE, fileWithLines($error_initial_file_path));
+    exit();
   }
 }
 
@@ -249,7 +260,6 @@ else {
     
     // Error log etc
     $error_volumes = " -v " . $current_error_folder . ":/error ";
-    $error_initial_file_path = $current_error_folder . "/" . $error_filename;
     
     $name = " --name " . $id;
     $workdir = " -w /home ";
