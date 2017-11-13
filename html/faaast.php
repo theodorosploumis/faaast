@@ -23,7 +23,7 @@ if (isset($_GET['compress'])) {
 }
 
 // Currently, support only these package managers/tools
-$software = ["composer", "drush", "gem", "ied", "pip", "npm", "pnpm", "yarn"];
+$software = ["composer", "drush", "gem", "ied", "pip", "pip3", "npm", "pnpm", "yarn"];
 
 // Get cmd from url
 if (isset($_GET['cmd'])) {
