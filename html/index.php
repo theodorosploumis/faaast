@@ -10,20 +10,22 @@ require_once __DIR__ . '/functions.php';
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="Description" content="A tiny tool that let's you package software on the cloud and download it. Useful for low bandwidth connections, testing etc.">
+    <meta name="Description"
+          content="A tiny tool that let's you package software on the cloud and download it. Useful for low bandwidth connections, testing etc.">
     <meta name="Keywords" content="package manager, faaast, saas, docker">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@theoploumis">
     <meta name="twitter:title" content="Faaast">
-    <meta name="twitter:description" content="A tiny tool that let's you package software on the cloud and download it. Useful for low bandwidth connections, testing etc.">
+    <meta name="twitter:description"
+          content="A tiny tool that let's you package software on the cloud and download it. Useful for low bandwidth connections, testing etc.">
 
     <title>Faaast - Packager as a Service</title>
 
     <link rel="stylesheet" href="css/style.css">
 
     <link href="<?php print googleFonts(); ?>" rel="stylesheet">
-    <?php print googleAnalytics($google_analytics_code); ?>
-    <?php print shareThis($sharethis); ?>
+  <?php print googleAnalytics($google_analytics_code); ?>
+  <?php print shareThis($sharethis); ?>
 
 </head>
 
@@ -76,17 +78,19 @@ require_once __DIR__ . '/functions.php';
             <span> Packaging...</span>
         </div> -->
 
-        <input class="form-item" id="submit-button" type="submit" value="Download">
+        <input class="form-item" id="submit-button" type="submit"
+               value="Download">
 
     </form>
-    
-    <p>Prefer the <b>cli</b>? Get it <a href="https://github.com/theodorosploumis/faaast#cli-tool">here</a>.</p>
+
+    <p>Prefer the <b>cli</b>? Get it <a href="https://github.com/theodorosploumis/faaast#cli-tool">here</a>.
+    </p>
 
 </section>
 
 <footer>
     <p>
-        <?php print footerMessage(); ?>
+      <?php print footerMessage(); ?>
     </p>
 </footer>
 
