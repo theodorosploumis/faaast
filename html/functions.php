@@ -166,13 +166,14 @@ function rmdirRecursive($dir) {
 function fileWithLines($filename, $separator = "\n") {
   $file_lines = file($filename);
   $result = "";
+  $number = 0;
   
   $result .= "<div class='error'>";
   
   foreach ($file_lines as $line_num => $line) {
     if (trim($line) != "") {
-      $line_num = $line_num + 1;
-      $result .= "{$line_num}: " . $line . $separator;
+      $number += 1;
+      $result .= "{$number}: " . $line . $separator;
       $result .= $separator;
     }
   }
