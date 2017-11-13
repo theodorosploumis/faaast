@@ -3,7 +3,7 @@
 # Change variables according to your neeeds
 
 INSTALL_LETSENCYPT=0
-INSTALL_PORTAINER=1
+INSTALL_PORTAINER=0
 
 # Generic software
 apt-get -qqy update
