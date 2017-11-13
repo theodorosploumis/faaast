@@ -40,7 +40,10 @@ ul {
 }
 
 .info {
-  margin: 30px auto;
+  margin: 20px auto;
+}
+
+.gh-stars {
   padding: 20px 0;
 }
 

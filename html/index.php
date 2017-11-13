@@ -35,8 +35,10 @@ require_once __DIR__ . '/functions.php';
 
 <div class="logo">
     <a href="/"><img src="logo.png" title="Faaast logo"></a>
+    <div class="gh-stars">
     <a class="github-button" href="https://github.com/theodorosploumis/faaast"
        data-show-count="true" aria-label="Star theodorosploumis/faaast on GitHub">Star</a>
+    </div>
 </div>
 
 <h1 class="hidden">Faaast - Packager as a Service</h1>
