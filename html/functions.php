@@ -215,7 +215,7 @@ function jsonResult($error = FALSE, $message = "", $fileurl = "") {
     $response = array(
       'status' => FALSE,
       'message' => "An error occured",
-      'file' => $message
+      'file' => "An error occured"
     );
   }
   else {
@@ -227,5 +227,4 @@ function jsonResult($error = FALSE, $message = "", $fileurl = "") {
   }
   
   echo json_encode($response);
-  exit();
 }

@@ -239,6 +239,7 @@ if (file_exists($compressed_path)) {
   }
   else {
     jsonResult(FALSE, "File exists", $compressed_url);
+    exit();
   }
 }
 else {
@@ -268,6 +269,7 @@ else {
       }
       else {
         jsonResult(FALSE, "File exists", $compressed_url);
+        exit();
       }
     }
     
@@ -292,4 +294,3 @@ else {
 
 print $debug_message;
 exit();
-
