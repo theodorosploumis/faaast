@@ -36,6 +36,27 @@ $software = [
   "yarn"
 ];
 
+// Build ID
+if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
+  $id = $_GET['id'];
+  $id = preg_replace('/[^a-z]/', '', $id);
+  
+  // Host files to create volumes
+  $current_build_folder = $builds_files_path . $id . "/";
+  $current_error_folder = $error_files_path . $id;
+  
+} else {
+  $debug_message = "ID is not defined";
+  if ($api == 0) {
+    echo "API=" . $api;
+    echo $debug_message;
+    exit();
+  }
+  else {
+    jsonResult(TRUE, $debug_message);
+  }
+}
+
 // Get cmd from url
 if (isset($_GET['cmd'])) {
   $cmd = $_GET['cmd'];
@@ -165,12 +186,13 @@ if (isset($_GET['cmd'])) {
   // Capture command output on a file and append the command
   $cmd_main = $cmd . " > /error/" . $error_filename . " 2>&1";
   
-  //$cmd_exit = "$(if [ $(du -shb /home | awk '{print $1}') -lt 8000 ]; then exit; fi)"; // 8000 bytes
-  //$cmd_exit = "$(if [ (echo $?) != 0 ]; then exit; fi)";
+// $cmd_exit = "$(if [ $(du -shb /home | awk '{print $1}') -lt 8000 ]; then exit; fi)"; // 8000 bytes
+// $cmd_exit = "$(if [ (echo $?) != 0 ]; then exit; fi)";
+  
   $cmd_cd = " cd " . $folder;
   $cmd_chown_home = " chown -R www-data:www-data " . $folder;
 
-//    $cmd_debug = "printf '" . nl2br(trim(strip_tags($cmd))) . "' >> /error/command.log";
+// $cmd_debug = "printf '" . nl2br(trim(strip_tags($cmd))) . "' >> /error/command.log";
   
   if ($compress_method == "tar.gz") {
     $cmd_compress = " tar -zcvf /downloads/" . $filename . " *";
@@ -198,29 +220,6 @@ if (isset($_GET['cmd'])) {
   else {
     jsonResult(TRUE, $debug_message);
   }
-}
-
-if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
-  $id = $_GET['id'];
-  $id = preg_replace('/[^a-z]/', '', $id);
-} else {
-  $debug_message = "ID is not defined";
-  if ($api == 0) {
-    echo "API=" . $api;
-    echo $debug_message;
-    exit();
-  }
-  else {
-    jsonResult(TRUE, $debug_message);
-  }
-}
-
-// Host files to create volumes
-$current_build_folder = $builds_files_path . $id . "/"; // the folder that will be volumed
-$current_error_folder = $error_files_path . $id;
-
-if (!file_exists($current_build_folder)) {
-  mkdir($current_build_folder, 0777);
 }
 
 // If error is set show error result immediately
@@ -255,6 +254,10 @@ if (file_exists($compressed_path)) {
 }
 else {
   if ($error == FALSE) {
+    if (!file_exists($current_build_folder)) {
+      mkdir($current_build_folder, 0777);
+    }
+    
     // Run docker and create the file if not exist
     $volumes = $cache . " -v " . $current_build_folder . ":/downloads ";
     
