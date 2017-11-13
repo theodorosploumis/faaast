@@ -27,7 +27,6 @@ require_once __DIR__ . '/functions.php';
     <link href="<?php print googleFonts(); ?>" rel="stylesheet">
     <?php print googleAnalytics($google_analytics_code); ?>
     <?php print shareThis($sharethis); ?>
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
 
 </head>
 
@@ -35,9 +34,9 @@ require_once __DIR__ . '/functions.php';
 
 <div class="logo">
     <a href="/"><img src="logo.png" title="Faaast logo"></a>
-    <div class="gh-stars">
-    <a class="github-button" href="https://github.com/theodorosploumis/faaast"
-       data-show-count="true" aria-label="Star theodorosploumis/faaast on GitHub">Star</a>
+    <a class="gh-stars">
+        <a href="https://hub.docker.com/r/tplcom/faaast/"><img src="https://img.shields.io/docker/stars/tplcom/faaast.svg?style=plastic"></a>
+        <a href="https://github.com/theodorosploumis/faaast/"><img src="https://img.shields.io/github/stars/theodorosploumis/faaast.svg?style=social&label=Stars&style=plastic"></a>
     </div>
 </div>
 
