@@ -57,6 +57,9 @@ if [ "${INSTALL_PORTAINER}" -eq "1" ]; then
          portainer/portainer
 fi
 
+# Download docker image
+docker pull tplcom/faaast:latest
+
 # Link extra aliases
 touch ~/.bashrc
 echo "if [ -f /var/www/scripts/.aliases ]; then" >> ~/.bashrc
