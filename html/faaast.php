@@ -18,8 +18,7 @@ if (isset($_GET['api'])) {
 
 if (isset($_GET['compress'])) {
   $compress_method = $_GET['compress'];
-}
-else {
+} else {
   $compress_method = "tar.gz";
 }
 
@@ -51,8 +50,7 @@ if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
     echo "API=" . $api;
     echo $debug_message;
     exit();
-  }
-  else {
+  } else {
     jsonResult(TRUE, $debug_message);
   }
 }
@@ -176,8 +174,7 @@ if (isset($_GET['cmd'])) {
     if ($api == 0) {
       echo $debug_message;
       exit();
-    }
-    else {
+    } else {
       jsonResult(TRUE, $debug_message);
       exit();
     }
@@ -185,7 +182,7 @@ if (isset($_GET['cmd'])) {
   
   // Capture command output on a file and append the command
   $cmd_main = $cmd . " > /error/" . $error_filename . " 2>&1";
-  
+
 // $cmd_exit = "$(if [ $(du -shb /home | awk '{print $1}') -lt 8000 ]; then exit; fi)"; // 8000 bytes
 // $cmd_exit = "$(if [ (echo $?) != 0 ]; then exit; fi)";
   
@@ -196,8 +193,7 @@ if (isset($_GET['cmd'])) {
   
   if ($compress_method == "tar.gz") {
     $cmd_compress = " tar -zcvf /downloads/" . $filename . " *";
-  }
-  else {
+  } else {
     $cmd_compress = " zip -r /downloads/" . $filename . " *";
   }
   $cmd_chown_compressed = " chown -R www-data:www-data /downloads/ && chown -R www-data:www-data /error/ ";
@@ -216,8 +212,7 @@ if (isset($_GET['cmd'])) {
   if ($api == 0) {
     echo $debug_message;
     exit();
-  }
-  else {
+  } else {
     jsonResult(TRUE, $debug_message);
   }
 }
@@ -227,8 +222,7 @@ if (isset($_GET["error"]) && file_exists($error_initial_file_path)) {
   if ($api == 0) {
     print simpleHtml("An error occured", fileWithLines($error_initial_file_path, "<br>"));
     exit();
-  }
-  else {
+  } else {
     jsonResult(TRUE, fileWithLines($error_initial_file_path));
     exit();
   }
@@ -246,20 +240,19 @@ if (file_exists($compressed_path)) {
     //downloadFile($compressed_path);
     redirectTo($compressed_url);
     exit();
-  }
-  else {
+  } else {
     jsonResult(FALSE, "File exists", $compressed_url);
     exit();
   }
-}
-else {
+} else {
   if ($error == FALSE) {
     if (!file_exists($current_build_folder)) {
       mkdir($current_build_folder, 0777);
     }
     
     // Run docker and create the file if not exist
-    $volumes = $cache . " -v " . $current_build_folder . ":/downloads ";
+    $volumes = $cache;
+    $volumes .= " -v " . $current_build_folder . ":/downloads ";
     
     // Error log etc
     $error_volumes = " -v " . $current_error_folder . ":/error ";
@@ -279,8 +272,7 @@ else {
         //downloadFile($initial_compressed_path);
         redirectTo($compressed_url);
         exit();
-      }
-      else {
+      } else {
         jsonResult(FALSE, "File exists", $compressed_url);
         exit();
       }
@@ -294,8 +286,7 @@ else {
         sleep(10);
         rmdirRecursive($current_build_folder);
         exit();
-      }
-      else {
+      } else {
         jsonResult(TRUE, fileWithLines($error_initial_file_path));
         sleep(10);
         rmdirRecursive($current_build_folder);

@@ -28,11 +28,13 @@ require_once __DIR__ . '/functions.php';
         <h2>About</h2>
 
         <p>
-            Faaast is a package manager as a service (SaaS). Faaaster than your local machine!
+            Faaast is a package manager as a service (SaaS). Faaaster than your
+            local machine!
         </p>
 
         <p>
-            Instead of using your local machine to build software from repositories you can use Faaast.
+            Instead of using your local machine to build software from
+            repositories you can use Faaast.
         </p>
     </section>
 
@@ -40,7 +42,7 @@ require_once __DIR__ . '/functions.php';
         <h2>What package managers are supported?</h2>
 
         <p> Currently we support only these "package managers":<br>
-            
+
             <b>
                 <a href="https://www.npmjs.com/">npm</a>,
                 <a href="https://yarnpkg.com/">yarn</a>,
@@ -53,7 +55,7 @@ require_once __DIR__ . '/functions.php';
             </b>.
 
         </p>
-           The commands that are currently allowed are:
+        The commands that are currently allowed are:
         <p>
             <small>
                 - composer install/create-project<br>
@@ -62,7 +64,7 @@ require_once __DIR__ . '/functions.php';
                 - ied install<br>
                 - npm install/add<br>
                 - pnpm install<br>
-                - pip install<br>
+                - pip/pip3 install<br>
                 - yarn add<br>
             </small>
         </p>
@@ -77,9 +79,11 @@ require_once __DIR__ . '/functions.php';
         <h2>Why use it?</h2>
 
         <ul>
-            <li>Because sometimes there unknown errors with package managers.</li>
+            <li>Because sometimes there unknown errors with package managers.
+            </li>
             <li>Because WiFi issues may corrupt packaging.</li>
-            <li>Because sometimes you don't want to spend time for packaging.</li>
+            <li>Because sometimes you don't want to spend time for packaging.
+            </li>
             <li>Because not every machine can use package managers.</li>
             <li>To experiment with package managers.</li>
             <li>Because Docker can do this!</li>
@@ -90,31 +94,33 @@ require_once __DIR__ . '/functions.php';
         <h2>Which is the software behind this?</h2>
 
         <p>
-            I have built this tool as a proof of concept of a simple SaaS based on <b>Docker</b> and <b>php</b>.
+            I have built this tool as a proof of concept of a simple SaaS based
+            on <b>Docker</b> and <b>php</b>.
         </p>
-        
+
         <p>
             Everytime you use a package command you run a public
-            <a href="https://hub.docker.com/r/tplcom/faaast">Docker image</a> that contains:
+            <a href="https://hub.docker.com/r/tplcom/faaast">Docker image</a>
+            that contains:
         </p>
 
         <p>
             <small>
-            - bundler 1.16.0<br>
-            - composer 1.5.2<br>
-            - drush 8.1.15<br>
-            - gem 2.5.1<br>
-            - ied 2.3.6<br>
-            - node v8.9.1<br>
-            - npm 5.5.1<br>
-            - pnpm 1.20.0<br>
-            - python 2.7.12<br>
-            - python3 3.5.2<br>
-            - pip 9.0.1<br>
-            - pip3 9.0.1<br>
-            - php 7.0.22<br>
-            - ruby 2.3.1p112<br>
-            - yarn 1.3.2<br>
+                - bundler 1.16.0<br>
+                - composer 1.5.2<br>
+                - drush 8.1.15<br>
+                - gem 2.5.1<br>
+                - ied 2.3.6<br>
+                - node v8.9.1<br>
+                - npm 5.5.1<br>
+                - pnpm 1.20.0<br>
+                - python 2.7.12<br>
+                - python3 3.5.2<br>
+                - pip 9.0.1<br>
+                - pip3 9.0.1<br>
+                - php 7.0.22<br>
+                - ruby 2.3.1p112<br>
+                - yarn 1.3.2<br>
             </small>
         </p>
     </section>
@@ -127,8 +133,11 @@ require_once __DIR__ . '/functions.php';
         </p>
 
         <p>
-            A <a href="https://www.drupal.org/u/theodorosploumis">Drupal developer</a>
-            with devops skills. See <a href="https://theodorosploumis.github.io/portfolio/">my work here</a>.
+            A <a href="https://www.drupal.org/u/theodorosploumis">Drupal
+                developer</a>
+            with devops skills. See <a
+                    href="https://theodorosploumis.github.io/portfolio/">my work
+                here</a>.
         </p>
     </section>
 
@@ -136,7 +145,7 @@ require_once __DIR__ . '/functions.php';
 
 <footer>
     <p>
-        <?php print footerMessage(); ?>
+      <?php print footerMessage(); ?>
     </p>
 </footer>
 

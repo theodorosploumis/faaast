@@ -76,6 +76,19 @@ apt-get autoremove
 
 service apache2 reload
 
+# Add swap file
+# See more here: https://www.digitalocean.com/community/tutorials/how-to-add-swap-space-on-ubuntu-16-04
+fallocate -l 1G /swapfile
+chmod 600 /swapfile
+mkswap /swapfile
+swapon /swapfile
+cp /etc/fstab /etc/fstab.bak
+echo "/swapfile none swap sw 0 0" | tee -a /etc/fstab
+echo "vm.swappiness=10 " >> /etc/sysctl.conf
+echo "vm.vfs_cache_pressure=50 " >> /etc/sysctl.conf
+sysctl vm.swappiness=10
+sysctl vm.vfs_cache_pressure=50
+
 # Manually actions
 # Set timezone
 echo -n "Run: dpkg-reconfigure tzdata"

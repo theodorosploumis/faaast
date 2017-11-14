@@ -18,7 +18,7 @@ URL="https://faaast.download/faaast.php?cmd=${COMMAND// /+}&id=${ID}&api=1"
 ERROR_URL="https://faaast.download/faaast.php?cmd=${COMMAND// /+}&id=${ID}&error=true"
 
 echo -e "Posting to ${URL}";
-echo -e "";
+echo -e "please wait...";
 
 FILE=$(curl -s "$URL" | python -c 'import json,sys;obj=json.load(sys.stdin);print obj["'file'"]';)
 
