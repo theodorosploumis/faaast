@@ -2,5 +2,6 @@
 .idea
 /error
 /html/vendor
-/html/builds
+/html/builds/*
+!/html/builds/index.php
 /html/settings.php
