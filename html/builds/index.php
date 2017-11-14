@@ -242,9 +242,9 @@ function buildLink($changes) {
         body {
             text-align: center;
             font-family: sans-serif;
-            font-size: 13px;
+            font-size: 12px;
             background: #eaeaea;
-            color: #000000;
+            color: #000;
         }
 
         .logo {
