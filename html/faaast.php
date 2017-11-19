@@ -39,11 +39,11 @@ $software = [
 if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
   $id = $_GET['id'];
   $id = preg_replace('/[^a-z]/', '', $id);
-  
+
   // Host files to create volumes
   $current_build_folder = $builds_files_path . $id . "/";
   $current_error_folder = $error_files_path . $id;
-  
+
 } else {
   $debug_message = "ID is not defined";
   if ($api == 0) {
@@ -58,30 +58,30 @@ if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
 // Get cmd from url
 if (isset($_GET['cmd'])) {
   $cmd = $_GET['cmd'];
-  
+
   $filename = normalizeString($cmd) . "." . $compress_method;
-  
+
   $cmd_array = explode(" ", $cmd);
   $cmd_software = strtolower($cmd_array[0]); // eg npm
   $cmd_command = strtolower($cmd_array[1]); // eg install
-  
+
   $error_filename = normalizeString($cmd) . ".error.log";
   $error_initial_file_path = $current_error_folder . "/" . $error_filename;
-  
+
   //  unset($cmd_array[0]);
   //  unset($cmd_array[1]);
   //  $cmd_following = $cmd_array; // eg react-native (package name)
-  
+
   if (!in_array($cmd_software, $software)) {
     $debug_message .= 'Command ' . $cmd_software . ' is not supported.\n';
     $error = TRUE;
   }
-  
+
   if (stringContains($cmd, [";", "||", "& ", "&&"])) {
     $debug_message .= 'Chained commands are not supported.\n';
     $error = TRUE;
   }
-  
+
   switch ($cmd_software) {
     case "gem":
       if (!in_array($cmd_command, ["install"])) {
@@ -92,7 +92,7 @@ if (isset($_GET['cmd'])) {
       $cmd = $cmd . " --install-dir /home";
       $cache = " -v /caches/gem:/.gem";
       break;
-    
+
     case "pip":
       if (!in_array($cmd_command, ["install"])) {
         $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
@@ -102,7 +102,7 @@ if (isset($_GET['cmd'])) {
       $cmd = $cmd . " --target=/home --no-cache-dir";
       $cache = " -v /caches/pip:/root/.cache/pip";
       break;
-    
+
     case "pip3":
       if (!in_array($cmd_command, ["install"])) {
         $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
@@ -112,7 +112,7 @@ if (isset($_GET['cmd'])) {
       $cmd = $cmd . " --target=/home --no-cache-dir";
       $cache = " -v /caches/pip:/root/.cache/pip";
       break;
-    
+
     case "npm":
       if (!in_array($cmd_command, ["install", "add"])) {
         $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
@@ -122,7 +122,7 @@ if (isset($_GET['cmd'])) {
       $cmd = $cmd_software . " set progress=false; " . $cmd . " --silent";
       $cache = " -v /caches/npm/:/.npm";
       break;
-    
+
     case "yarn":
       if (!in_array($cmd_command, ["add"])) {
         $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
@@ -132,7 +132,7 @@ if (isset($_GET['cmd'])) {
       $cmd = $cmd . " --no-progress --silent --prefer-online --ignore-optional --non-interactive";
       $cache = " -v /caches/yarn:/usr/local/share/.cache/yarn/v1";
       break;
-    
+
     case "pnpm":
       if ($cmd_command != "install") {
         $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
@@ -141,7 +141,7 @@ if (isset($_GET['cmd'])) {
       }
       $cmd = "echo '{}' > package.json && " . $cmd;
       break;
-    
+
     case "ied":
       if ($cmd_command != "install") {
         $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
@@ -149,17 +149,17 @@ if (isset($_GET['cmd'])) {
         $error = TRUE;
       }
       break;
-    
+
     case "composer":
       if (!in_array($cmd_command, ["require", "create-project"])) {
         $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
         $debug_message .= "Use 'composer require/create-project'.\n";
         $error = TRUE;
       }
-      $cmd = $cmd . " --quiet --no-ansi --no-interaction --working-dir=/home";
+      $cmd = $cmd . " --quiet --prefer-dist --no-ansi --no-interaction --working-dir=/home";
       $cache = " -v /caches/composer:/.composer/cache";
       break;
-    
+
     case "drush":
       if (!in_array($cmd_command, ["pm-download", "dl"])) {
         $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
@@ -169,7 +169,7 @@ if (isset($_GET['cmd'])) {
       $cache = " -v /caches/drush:/.drush/cache/download";
       break;
   }
-  
+
   if ($error == TRUE) {
     if ($api == 0) {
       echo $debug_message;
@@ -179,25 +179,25 @@ if (isset($_GET['cmd'])) {
       exit();
     }
   }
-  
+
   // Capture command output on a file and append the command
   $cmd_main = $cmd . " > /error/" . $error_filename . " 2>&1";
 
 // $cmd_exit = "$(if [ $(du -shb /home | awk '{print $1}') -lt 8000 ]; then exit; fi)"; // 8000 bytes
 // $cmd_exit = "$(if [ (echo $?) != 0 ]; then exit; fi)";
-  
+
   $cmd_cd = " cd " . $folder;
   $cmd_chown_home = " chown -R www-data:www-data " . $folder;
 
 // $cmd_debug = "printf '" . nl2br(trim(strip_tags($cmd))) . "' >> /error/command.log";
-  
+
   if ($compress_method == "tar.gz") {
     $cmd_compress = " tar -zcvf /downloads/" . $filename . " *";
   } else {
     $cmd_compress = " zip -r /downloads/" . $filename . " *";
   }
   $cmd_chown_compressed = " chown -R www-data:www-data /downloads/ && chown -R www-data:www-data /error/ ";
-  
+
   $command = ' /bin/bash -c "';
   $command .= $cmd_main . ' && ';
   $command .= $cmd_chown_home . ' && ';
@@ -206,7 +206,7 @@ if (isset($_GET['cmd'])) {
   $command .= $cmd_chown_compressed;
   // $command .= $cmd_debug;
   $command .= '"';
-  
+
 } else {
   $debug_message = "Command is not defined";
   if ($api == 0) {
@@ -235,7 +235,7 @@ $compressed_url = "https://" . $domain . "/builds/" . $filename;
 
 // Download the file if exists
 if (file_exists($compressed_path)) {
-  
+
   if ($api == 0) {
     //downloadFile($compressed_path);
     redirectTo($compressed_url);
@@ -249,20 +249,20 @@ if (file_exists($compressed_path)) {
     if (!file_exists($current_build_folder)) {
       mkdir($current_build_folder, 0777);
     }
-    
+
     // Run docker and create the file if not exist
     $volumes = $cache;
     $volumes .= " -v " . $current_build_folder . ":/downloads ";
-    
+
     // Error log etc
     $error_volumes = " -v " . $current_error_folder . ":/error ";
-    
+
     $name = " --name " . $id;
     $workdir = " -w /home ";
     $docker = "docker run --rm " . $name . $workdir . $volumes . $error_volumes . $docker_image . $command;
-    
+
     exec($docker);
-    
+
     // Move file into a new place/name
     if (file_exists($initial_compressed_path)) {
       rename($initial_compressed_path, $compressed_path);
@@ -277,7 +277,7 @@ if (file_exists($compressed_path)) {
         exit();
       }
     }
-    
+
     // If error file exists show that error
     if (file_exists($error_initial_file_path)) {
       if ($api == 0) {
