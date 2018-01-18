@@ -25,18 +25,17 @@ if [ "${INSTALL_LETSENCYPT}" -eq "1" ]; then
 fi
 
 # Clone git files
-rm -rf /var/www
-git clone https://github.com/theodorosploumis/faaast.git /var/www/
+git clone https://github.com/theodorosploumis/faaast.git /var/www/faaast
 
 # Create several helpful folders
-mkdir /var/www/html/builds /var/www/error
-chown -R www-data:www-data /var/www/html/builds /var/www/error
+mkdir /var/www/faaast/html/builds /var/www/faaast/error
+chown -R www-data:www-data /var/www/faaast/html/builds /var/www/faaast/error
 
 # Setup cron task
-chmod +x /var/www/scripts/cron_tasks.sh
-(crontab -l ; echo "* * * * * (sleep 5 /bin/bash /var/www/scripts/cron_tasks.sh)") | crontab
+chmod +x /var/www/faaast/scripts/cron_tasks.sh
+(crontab -l ; echo "* * * * * (sleep 5 /bin/bash /var/www/faaast/scripts/cron_tasks.sh)") | crontab
 
-cp /var/www/html/settings.default.php /var/www/html/settings.php
+cp /var/www/faaast/html/settings.default.php /var/www/faaast/html/settings.php
 
 # Docker. Notice that we do not install latest Docker to support Rancher
 # curl https://get.docker.com | sh
@@ -63,8 +62,8 @@ docker pull tplcom/faaast:latest
 
 # Link extra aliases
 touch ~/.bashrc
-echo "if [ -f /var/www/scripts/.aliases ]; then" >> ~/.bashrc
-echo ". /var/www/scripts/.aliases" >> ~/.bashrc
+echo "if [ -f /var/www/faaast/scripts/.aliases ]; then" >> ~/.bashrc
+echo ". /var/www/faaast/scripts/.aliases" >> ~/.bashrc
 echo "fi" >> ~/.bashrc
 source ~/.bashrc
 
