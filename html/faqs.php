@@ -47,7 +47,6 @@ require_once __DIR__ . '/functions.php';
                 <a href="https://www.npmjs.com/">npm</a>,
                 <a href="https://yarnpkg.com/">yarn</a>,
                 <a href="https://pnpm.js.org/">pnpm</a>,
-                <a href="https://github.com/alexanderGugel/ied">ied</a>,
                 <a href="https://rubygems.org/">gem</a>,
                 <a href="https://getcomposer.org">composer</a>,
                 <a href="https://github.com/drush-ops/drush">drush</a>,
@@ -61,7 +60,6 @@ require_once __DIR__ . '/functions.php';
                 - composer install/create-project<br>
                 - drush dl/pm-download<br>
                 - gem install<br>
-                - ied install<br>
                 - npm install/add<br>
                 - pnpm install<br>
                 - pip/pip3 install<br>
@@ -110,7 +108,6 @@ require_once __DIR__ . '/functions.php';
                 - composer 1.5.2<br>
                 - drush 8.1.15<br>
                 - gem 2.5.1<br>
-                - ied 2.3.6<br>
                 - node v8.9.1<br>
                 - npm 5.5.1<br>
                 - pnpm 1.20.0<br>
