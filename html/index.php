@@ -52,7 +52,6 @@ require_once __DIR__ . '/functions.php';
             <a href="https://www.npmjs.com/">npm</a> |
             <a href="https://yarnpkg.com/">yarn</a> |
             <a href="https://pnpm.js.org/">pnpm</a> |
-            <a href="https://github.com/alexanderGugel/ied">ied</a> |
             <a href="https://rubygems.org/">gem</a> |
             <a href="https://getcomposer.org">composer</a> |
             <a href="https://github.com/drush-ops/drush">drush</a> |

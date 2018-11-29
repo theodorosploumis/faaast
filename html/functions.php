@@ -134,8 +134,6 @@ function footerMessage() {
   $text .= "<a href='/builds'>Builds</a>";
   $text .= ' | ';
   $text .= "<a href='https://github.com/theodorosploumis/faaast/'>GitHub</a>";
-  $text .= ' | ';
-  $text .= 'Hosted on <a href="https://www.vultr.com/?ref=7258956">Vultr.com</a>';
   
   return $text;
 }
