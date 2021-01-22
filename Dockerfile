@@ -1,6 +1,10 @@
 FROM ubuntu:20.04
 
+ENV TZ=Europe/Athens
+
 RUN apt-get update
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Install build tools and libraries
 RUN apt-get install -yqq \
@@ -12,27 +16,25 @@ RUN apt-get install -yqq \
     sudo \
     wget \
     git \
-    python \
-    python-pip \
-    python-software-properties \
+    python3-pip \
+    software-properties-common \
     ruby-all-dev \
     sqlite3 \
     zlib1g-dev
 
 # Install PHP
 RUN apt-get update -y && \
-    apt-get install -yqq php7.4 \
-    php7.4-cli \
-    php7.4-curl \
-    php7.4-common \
-    php7.4-mbstring \
-    php7.4-gd \
-    php7.4-intl \
-    php7.4-xml \
-    php7.4-json \
-    php7.4-mysql \
-    php7.4-mcrypt \
-    php7.4-zip
+    apt-get install -yqq php \
+    php-cli \
+    php-curl \
+    php-common \
+    php-mbstring \
+    php-gd \
+    php-intl \
+    php-xml \
+    php-json \
+    php-mysql \
+    php-zip
 
 # Prepare to install nodejs
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
@@ -40,12 +42,8 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get update && \
     apt-get install -yqq nodejs build-essential
 
-# Upgrade pip
-RUN pip install --upgrade pip
-
 # Install Bundler
-RUN gem install bundler --no-ri --no-rdoc && \
-    echo "gem: --no-document" >> ~/.gemrc
+RUN gem install bundler &&  echo "gem: --no-document" >> ~/.gemrc
 
 # Install yarn, ied
 RUN npm install -g --no-progress --quiet yarn ied
@@ -55,8 +53,7 @@ RUN curl -L https://unpkg.com/@pnpm/self-installer | node && \
     pnpm install -g pnpm
 
 # Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    composer global require hirak/prestissimo
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install Drush
 RUN wget -q https://github.com/drush-ops/drush/releases/download/8.4.5/drush.phar && \
