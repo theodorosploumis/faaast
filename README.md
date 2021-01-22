@@ -66,28 +66,10 @@ faaast "npm install react"
 ```
 
 ## Software per docker image
-
-| Software | Version      |
-| :------- |:------------ |
-| OS       | Ubuntu 20.04 |
-| bundler  | 2.2.6    |
-| composer | 2.0.8    |
-| drush    | 8.4.5    |
-| gem      | 3.1.2    |
-| ied      | 2.3.6    |
-| node     | v14.15.4 |
-| npm      | 6.14.10  |
-| pnpm     | 5.15.2   |
-| python3  | 3.8.5    |
-| pip3     | 20.0.2   |
-| php      | 7.4.3    |
-| ruby     | 2.7.0p0  |
-| yarn     | 1.22.10  |
+- See releases: https://github.com/theodorosploumis/faaast/releases
 
 ## ToDo
-
-See this issue: [ToDo](https://github.com/theodorosploumis/faaast/issues/1).
+- See this issue: [ToDo](https://github.com/theodorosploumis/faaast/issues/1).
 
 ## License
-
 [![license](https://img.shields.io/github/license/theodorosploumis/faaast.svg)](LICENSE)

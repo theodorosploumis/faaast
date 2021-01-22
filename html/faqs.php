@@ -50,19 +50,20 @@ require_once __DIR__ . '/functions.php';
                 <a href="https://rubygems.org/">gem</a>,
                 <a href="https://getcomposer.org">composer</a>,
                 <a href="https://github.com/drush-ops/drush">drush</a>,
-                <a href="https://pip.pypa.io/">pip</a>
+                <a href="https://pip.pypa.io/">pip3</a>
             </b>.
 
         </p>
         The commands that are currently allowed are:
         <p>
             <small>
-                - composer install/create-project<br>
+                - composer1 install/create-project<br>
+                - composer2 install/create-project<br>
                 - drush dl/pm-download<br>
                 - gem install<br>
                 - npm install/add<br>
                 - pnpm install<br>
-                - pip/pip3 install<br>
+                - pip3 install<br>
                 - yarn add<br>
             </small>
         </p>
@@ -98,27 +99,27 @@ require_once __DIR__ . '/functions.php';
 
         <p>
             Everytime you use a package command you run a public
-            <a href="https://hub.docker.com/r/tplcom/faaast">Docker image</a>
-            that contains:
+            <a href="https://hub.docker.com/r/tplcom/faaast">Docker image</a> that contains:
         </p>
 
         <p>
             <small>
-                - bundler 1.16.0<br>
-                - composer 1.5.2<br>
-                - drush 8.1.15<br>
-                - gem 2.5.1<br>
-                - node v8.9.1<br>
-                - npm 5.5.1<br>
-                - pnpm 1.20.0<br>
-                - python 2.7.12<br>
-                - python3 3.5.2<br>
-                - pip 9.0.1<br>
-                - pip3 9.0.1<br>
-                - php 7.0.22<br>
-                - ruby 2.3.1p112<br>
-                - yarn 1.3.2<br>
+                - bundler<br>
+                - composer<br>
+                - drush<br>
+                - gem<br>
+                - node<br>
+                - npm<br>
+                - yarn<br>
+                - pnpm<br>
+                - python3<br>
+                - pip3<br>
+                - php<br>
+                - ruby<br>
             </small>
+        </p>
+        <p>
+          Please check on <a href="https://github.com/theodorosploumis/faaast/releases">releases</a> for binary versions.
         </p>
     </section>
 
@@ -130,11 +131,7 @@ require_once __DIR__ . '/functions.php';
         </p>
 
         <p>
-            A <a href="https://www.drupal.org/u/theodorosploumis">Drupal
-                developer</a>
-            with devops skills. See <a
-                    href="https://theodorosploumis.github.io/portfolio/">my work
-                here</a>.
+            A <a href="https://www.drupal.org/u/theodorosploumis">Drupal developer</a> with some devops skills. See <a href="https://theodorosploumis.github.io/portfolio/">my work here</a>.
         </p>
     </section>
 
