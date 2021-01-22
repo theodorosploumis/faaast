@@ -28,7 +28,6 @@ $software = [
   "drush",
   "gem",
   "ied",
-  "pip",
   "pip3",
   "npm",
   "pnpm",
@@ -91,16 +90,6 @@ if (isset($_GET['cmd'])) {
       }
       $cmd = $cmd . " --install-dir /home";
       $cache = " -v /caches/gem:/.gem";
-      break;
-
-    case "pip":
-      if (!in_array($cmd_command, ["install"])) {
-        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-        $debug_message .= " Use 'pip install'.\n";
-        $error = TRUE;
-      }
-      $cmd = $cmd . " --target=/home --no-cache-dir";
-      $cache = " -v /caches/pip:/root/.cache/pip";
       break;
 
     case "pip3":

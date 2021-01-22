@@ -1,6 +1,6 @@
 # Faaast
 
-[![Docker Stars](https://img.shields.io/docker/stars/tplcom/faaast.svg)]() [![Docker Build 
+[![Docker Stars](https://img.shields.io/docker/stars/tplcom/faaast.svg)]() [![Docker Build
 Status](https://img.shields.io/docker/build/tplcom/faaast.svg)](https://hub.docker.com/r/tplcom/faaast/builds/)
 
 ## About
@@ -36,7 +36,7 @@ docker run -it --rm -w /home -v $(pwd)/home:/home tplcom/faaast npm install visi
 
 ### API
 
-You can get the packaged (tar.gz or zip) files using wget, curl and python as simple as calling the 
+You can get the packaged (tar.gz or zip) files using wget, curl and python as simple as calling the
 simple HTTP api.
 
 ```bash
@@ -50,7 +50,7 @@ wget $(curl -s "https://faaast.download/faaast.php?cmd=npm+install+webpack&id=dd
 
 ### CLI tool
 
-Install the **faaast** command locally to get the packaged files from your command line. 
+Install the **faaast** command locally to get the packaged files from your command line.
 
 ```bash
 wget -q https://raw.githubusercontent.com/theodorosploumis/faaast/master/scripts/faaast && \
@@ -67,23 +67,22 @@ faaast "npm install react"
 
 ## Software per docker image
 
-| Software | Version |
-| :---  |:--- |
-| bundler | 1.16.0 |
-| composer | 1.5.2 |
-| drush | 8.1.15 |
-| gem | 2.5.1 |
-| ied | 2.3.6 |
-| node | v8.9.1 |
-| npm | 5.5.1 |
-| pnpm | 1.21.0 |
-| python | 2.7.12 |
-| python3 | 3.5.2 |
-| pip | 9.0.1 |
-| pip3 | 8.1.1 |
-| php | 7.0.22 |
-| ruby | 2.3.1p112 |
-| yarn | 1.3.2 |
+| Software | Version      |
+| :------- |:------------ |
+| OS       | Ubuntu 20.04 |
+| bundler  | 2.2.6    |
+| composer | 2.0.8    |
+| drush    | 8.4.5    |
+| gem      | 3.1.2    |
+| ied      | 2.3.6    |
+| node     | v14.15.4 |
+| npm      | 6.14.10  |
+| pnpm     | 5.15.2   |
+| python3  | 3.8.5    |
+| pip3     | 20.0.2   |
+| php      | 7.4.3    |
+| ruby     | 2.7.0p0  |
+| yarn     | 1.22.10  |
 
 ## ToDo
 
