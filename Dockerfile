@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 RUN apt-get update
 
@@ -13,10 +13,7 @@ RUN apt-get install -yqq \
     wget \
     git \
     python \
-    python-dev \
-    python3-dev \
     python-pip \
-    python3-pip \
     python-software-properties \
     ruby-all-dev \
     sqlite3 \
@@ -24,21 +21,21 @@ RUN apt-get install -yqq \
 
 # Install PHP
 RUN apt-get update -y && \
-    apt-get install -yqq php7.0 \
-    php7.0-cli \
-    php7.0-curl \
-    php7.0-common \
-    php7.0-mbstring \
-    php7.0-gd \
-    php7.0-intl \
-    php7.0-xml \
-    php7.0-json \
-    php7.0-mysql \
-    php7.0-mcrypt \
-    php7.0-zip
+    apt-get install -yqq php7.4 \
+    php7.4-cli \
+    php7.4-curl \
+    php7.4-common \
+    php7.4-mbstring \
+    php7.4-gd \
+    php7.4-intl \
+    php7.4-xml \
+    php7.4-json \
+    php7.4-mysql \
+    php7.4-mcrypt \
+    php7.4-zip
 
 # Prepare to install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
 RUN apt-get update && \
     apt-get install -yqq nodejs build-essential
@@ -62,7 +59,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     composer global require hirak/prestissimo
 
 # Install Drush
-RUN wget -q https://github.com/drush-ops/drush/releases/download/8.1.15/drush.phar && \
+RUN wget -q https://github.com/drush-ops/drush/releases/download/8.4.5/drush.phar && \
     chmod +x drush.phar && \
     mv drush.phar /usr/local/bin/drush
 
