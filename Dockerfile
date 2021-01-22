@@ -55,6 +55,10 @@ RUN curl -L https://unpkg.com/@pnpm/self-installer | node && \
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Create versions for composer
+RUN composer self-update --1 && cp /usr/local/bin/composer /usr/local/bin/composer1
+RUN composer self-update -- && cp /usr/local/bin/composer /usr/local/bin/composer2
+
 # Install Drush
 RUN wget -q https://github.com/drush-ops/drush/releases/download/8.4.5/drush.phar && \
     chmod +x drush.phar && \
