@@ -142,7 +142,24 @@ if (isset($_GET['cmd'])) {
     case "composer":
       if (!in_array($cmd_command, ["require", "create-project"])) {
         $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-        $debug_message .= "Use 'composer require/create-project'.\n";
+        $debug_message .= "Use \"composer1 require/create-project\" or \"composer2 require/create-project\'.\n";
+        $error = TRUE;
+      }
+
+    case "composer1":
+      if (!in_array($cmd_command, ["require", "create-project"])) {
+        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+        $debug_message .= "Use 'composer1 require/create-project' .\n";
+        $error = TRUE;
+      }
+      $cmd = $cmd . " --quiet --prefer-dist --no-ansi --no-interaction --working-dir=/home";
+      $cache = " -v /caches/composer:/.composer/cache";
+      break;
+
+    case "composer2":
+      if (!in_array($cmd_command, ["require", "create-project"])) {
+        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+        $debug_message .= "Use 'composer2 require/create-project' .\n";
         $error = TRUE;
       }
       $cmd = $cmd . " --quiet --prefer-dist --no-ansi --no-interaction --working-dir=/home";
@@ -172,8 +189,8 @@ if (isset($_GET['cmd'])) {
   // Capture command output on a file and append the command
   $cmd_main = $cmd . " > /error/" . $error_filename . " 2>&1";
 
-// $cmd_exit = "$(if [ $(du -shb /home | awk '{print $1}') -lt 8000 ]; then exit; fi)"; // 8000 bytes
-// $cmd_exit = "$(if [ (echo $?) != 0 ]; then exit; fi)";
+  // Append command to the faast.readme.txt file
+  file_put_contents("/home/faast.readme.txt", "\nCommand: \n\n".$cmd."\n\n", FILE_APPEND);
 
   $cmd_cd = " cd " . $folder;
   $cmd_chown_home = " chown -R www-data:www-data " . $folder;
