@@ -46,14 +46,13 @@ if (isset($_GET['id']) && (strlen($_GET['id']) == 20)) {
   $current_error_folder = $error_files_path . $id;
 
 } else {
-  $debug_message = "ID is not defined";
-  if ($api == 0) {
-    echo "API=" . $api;
-    echo $debug_message;
-    exit();
-  } else {
+    $debug_message = "ID is not defined";
+    if ($api == 0) {
+        echo "API=" . $api;
+        echo $debug_message;
+        exit();
+    }
     jsonResult(TRUE, $debug_message);
-  }
 }
 
 // Get cmd from url
@@ -76,32 +75,36 @@ if (isset($_GET['cmd'])) {
   if (!in_array($cmd_software, $software)) {
     $debug_message .= 'Command ' . $cmd_software . ' is not supported.\n';
     $error = TRUE;
+    echo $debug_message;
+    exit();
   }
 
   if (stringContains($cmd, [";", "||", "& ", "&&"])) {
     $debug_message .= 'Chained commands are not supported.\n';
     $error = TRUE;
+    echo $debug_message;
+    exit();
   }
 
   if ($error !== TRUE) {
     switch ($cmd_software) {
       case "gem":
-        if (!in_array($cmd_command, ["install"])) {
+        if ($cmd_command !== "install") {
           $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
           $debug_message .= " Use 'gem install'.\n";
           $error = TRUE;
         }
-        $cmd = $cmd . " --install-dir /home";
+        $cmd .= " --install-dir /home";
         $cache = " -v /caches/gem:/.gem";
         break;
 
       case "pip3":
-        if (!in_array($cmd_command, ["install"])) {
+        if ($cmd_command !== "install") {
           $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
           $debug_message .= " Use 'pip3 install'.\n";
           $error = TRUE;
         }
-        $cmd = $cmd . " --target=/home --no-cache-dir";
+        $cmd .= " --target=/home --no-cache-dir";
         $cache = " -v /caches/pip:/root/.cache/pip";
         break;
 
@@ -116,17 +119,17 @@ if (isset($_GET['cmd'])) {
         break;
 
       case "yarn":
-        if (!in_array($cmd_command, ["add"])) {
+        if ($cmd_command !== "add") {
           $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
           $debug_message .= "Use 'yarn add'.\n";
           $error = TRUE;
         }
-        $cmd = $cmd . " --no-progress --silent --prefer-online --ignore-optional --non-interactive";
+        $cmd .= " --no-progress --silent --prefer-online --ignore-optional --non-interactive";
         $cache = " -v /caches/yarn:/usr/local/share/.cache/yarn/v1";
         break;
 
       case "pnpm":
-        if ($cmd_command != "install") {
+        if ($cmd_command !== "install") {
           $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
           $debug_message .= " Use 'pnpm install'.\n";
           $error = TRUE;
@@ -135,7 +138,7 @@ if (isset($_GET['cmd'])) {
         break;
 
       case "ied":
-        if ($cmd_command != "install") {
+        if ($cmd_command !== "install") {
           $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
           $debug_message .= " Use 'ied install'.<br`>";
           $error = TRUE;
@@ -153,7 +156,7 @@ if (isset($_GET['cmd'])) {
           $debug_message .= "Use 'composer1 require/create-project' .\n";
           $error = TRUE;
         }
-        $cmd = $cmd . " --quiet --prefer-dist --no-ansi --no-interaction --working-dir=/home";
+        $cmd .= " --quiet --prefer-dist --no-ansi --no-interaction --working-dir=/home";
         $cache = " -v /caches/composer:/.composer/cache";
         break;
 
@@ -163,7 +166,7 @@ if (isset($_GET['cmd'])) {
           $debug_message .= "Use 'composer2 require/create-project' .\n";
           $error = TRUE;
         }
-        $cmd = $cmd . " --quiet --prefer-dist --no-ansi --no-interaction --working-dir=/home";
+        $cmd .= " --quiet --prefer-dist --no-ansi --no-interaction --working-dir=/home";
         $cache = " -v /caches/composer:/.composer/cache";
         break;
 
@@ -177,13 +180,12 @@ if (isset($_GET['cmd'])) {
         break;
     }
   } else {
-    if ($api == 0) {
-      echo $debug_message;
-      exit();
-    } else {
+      if ($api == 0) {
+          echo $debug_message;
+          exit();
+      }
       jsonResult(TRUE, $debug_message);
       exit();
-    }
   }
 
   // Capture command output on a file and append the command
@@ -197,7 +199,7 @@ if (isset($_GET['cmd'])) {
 
 // $cmd_debug = "printf '" . nl2br(trim(strip_tags($cmd))) . "' >> /error/command.log";
 
-  if ($compress_method == "tar.gz") {
+  if ($compress_method === "tar.gz") {
     $cmd_compress = " tar -zcvf /downloads/" . $filename . " *";
   } else {
     $cmd_compress = " zip -r /downloads/" . $filename . " *";
@@ -214,24 +216,22 @@ if (isset($_GET['cmd'])) {
   $command .= '"';
 
 } else {
-  $debug_message = "Command is not defined";
-  if ($api == 0) {
-    echo $debug_message;
-    exit();
-  } else {
+    $debug_message = "Command is not defined";
+    if ($api == 0) {
+        echo $debug_message;
+        exit();
+    }
     jsonResult(TRUE, $debug_message);
-  }
 }
 
 // If error is set show error result immediately
 if (isset($_GET["error"]) && file_exists($error_initial_file_path)) {
-  if ($api == 0) {
-    print simpleHtml("An error occured", fileWithLines($error_initial_file_path, "<br>"));
-    exit();
-  } else {
+    if ($api == 0) {
+        print simpleHtml("An error occured", fileWithLines($error_initial_file_path, "<br>"));
+        exit();
+    }
     jsonResult(TRUE, fileWithLines($error_initial_file_path));
     exit();
-  }
 }
 
 // Initial and final (desirable) packaged file path
@@ -241,64 +241,62 @@ $compressed_url = "https://" . $domain . "/builds/" . $filename;
 
 // Download the file if exists
 if (file_exists($compressed_path)) {
-
-  if ($api == 0) {
-    //downloadFile($compressed_path);
-    redirectTo($compressed_url);
-    exit();
-  } else {
-    jsonResult(FALSE, "File exists", $compressed_url);
-    exit();
-  }
-} else {
-  if ($error == FALSE) {
-    if (!file_exists($current_build_folder)) {
-      mkdir($current_build_folder, 0777);
-    }
-
-    // Run docker and create the file if not exist
-    $volumes = $cache;
-    $volumes .= " -v " . $current_build_folder . ":/downloads ";
-
-    // Error log etc
-    $error_volumes = " -v " . $current_error_folder . ":/error ";
-
-    $name = " --name " . $id;
-    $workdir = " -w /home ";
-    $docker = "docker run --rm " . $name . $workdir . $volumes . $error_volumes . $docker_image . $command;
-
-    exec($docker);
-
-    // Move file into a new place/name
-    if (file_exists($initial_compressed_path)) {
-      rename($initial_compressed_path, $compressed_path);
-      sleep(10);
-      rmdirRecursive($current_build_folder);
-      if ($api == 0) {
-        //downloadFile($initial_compressed_path);
+    if ($api == 0) {
+        //downloadFile($compressed_path);
         redirectTo($compressed_url);
         exit();
-      } else {
-        jsonResult(FALSE, "File exists", $compressed_url);
-        exit();
-      }
+    }
+    jsonResult(FALSE, "File exists", $compressed_url);
+    exit();
+}
+
+if ($error === FALSE) {
+  if (!file_exists($current_build_folder)) {
+    mkdir($current_build_folder, 0777);
+  }
+
+  // Run docker and create the file if not exist
+  $volumes = $cache;
+  $volumes .= " -v " . $current_build_folder . ":/downloads ";
+
+  // Error log etc
+  $error_volumes = " -v " . $current_error_folder . ":/error ";
+
+  $name = " --name " . $id;
+  $workdir = " -w /home ";
+  $docker = "docker run --rm " . $name . $workdir . $volumes . $error_volumes . $docker_image . $command;
+
+  exec($docker);
+
+  // Move file into a new place/name
+  if (file_exists($initial_compressed_path)) {
+    rename($initial_compressed_path, $compressed_path);
+    sleep(10);
+    rmdirRecursive($current_build_folder);
+    if ($api == 0) {
+      //downloadFile($initial_compressed_path);
+      redirectTo($compressed_url);
+      exit();
     }
 
-    // If error file exists show that error
-    if (file_exists($error_initial_file_path)) {
-      if ($api == 0) {
-        print simpleHtml("An error occured", fileWithLines($error_initial_file_path, "<br>"));
-        // Sleep 10s to allow cron change new folders owner
-        sleep(10);
-        rmdirRecursive($current_build_folder);
-        exit();
-      } else {
-        jsonResult(TRUE, fileWithLines($error_initial_file_path));
-        sleep(10);
-        rmdirRecursive($current_build_folder);
-        exit();
-      }
+      jsonResult(FALSE, "File exists", $compressed_url);
+      exit();
+  }
+
+  // If error file exists show that error
+  if (file_exists($error_initial_file_path)) {
+    if ($api == 0) {
+      print simpleHtml("An error occured", fileWithLines($error_initial_file_path, "<br>"));
+      // Sleep 10s to allow cron change new folders owner
+      sleep(10);
+      rmdirRecursive($current_build_folder);
+      exit();
     }
+
+      jsonResult(TRUE, fileWithLines($error_initial_file_path));
+      sleep(10);
+      rmdirRecursive($current_build_folder);
+      exit();
   }
 }
 
