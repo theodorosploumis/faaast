@@ -78,6 +78,8 @@ RUN mkdir /downloads /error
 COPY command.log /error/
 COPY faast.readme.txt /home
 
+RUN chmod 777 /home/faast.readme.txt
+
 WORKDIR /home
 
 VOLUME ["/.gems", "/.npm", "/.composer", "/usr/local/share/.cache/yarn/v1", "/.drush/cache/download"]
