@@ -83,100 +83,100 @@ if (isset($_GET['cmd'])) {
     $error = TRUE;
   }
 
-  switch ($cmd_software && $error !== TRUE) {
-    case "gem":
-      if (!in_array($cmd_command, ["install"])) {
-        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-        $debug_message .= " Use 'gem install'.\n";
+  if ($error !== TRUE) {
+    switch ($cmd_software) {
+      case "gem":
+        if (!in_array($cmd_command, ["install"])) {
+          $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+          $debug_message .= " Use 'gem install'.\n";
+          $error = TRUE;
+        }
+        $cmd = $cmd . " --install-dir /home";
+        $cache = " -v /caches/gem:/.gem";
+        break;
+
+      case "pip3":
+        if (!in_array($cmd_command, ["install"])) {
+          $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+          $debug_message .= " Use 'pip3 install'.\n";
+          $error = TRUE;
+        }
+        $cmd = $cmd . " --target=/home --no-cache-dir";
+        $cache = " -v /caches/pip:/root/.cache/pip";
+        break;
+
+      case "npm":
+        if (!in_array($cmd_command, ["install", "add"])) {
+          $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+          $debug_message .= " Use 'npm install/add'.\n";
+          $error = TRUE;
+        }
+        $cmd = $cmd_software . " set progress=false; " . $cmd . " --silent";
+        $cache = " -v /caches/npm/:/.npm";
+        break;
+
+      case "yarn":
+        if (!in_array($cmd_command, ["add"])) {
+          $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+          $debug_message .= "Use 'yarn add'.\n";
+          $error = TRUE;
+        }
+        $cmd = $cmd . " --no-progress --silent --prefer-online --ignore-optional --non-interactive";
+        $cache = " -v /caches/yarn:/usr/local/share/.cache/yarn/v1";
+        break;
+
+      case "pnpm":
+        if ($cmd_command != "install") {
+          $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+          $debug_message .= " Use 'pnpm install'.\n";
+          $error = TRUE;
+        }
+        $cmd = "echo '{}' > package.json && " . $cmd;
+        break;
+
+      case "ied":
+        if ($cmd_command != "install") {
+          $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+          $debug_message .= " Use 'ied install'.<br`>";
+          $error = TRUE;
+        }
+        break;
+
+      case "composer":
+        $debug_message .= "Use \"composer1 require/create-project\" or \"composer2 require/create-project\'.\n";
         $error = TRUE;
-      }
-      $cmd = $cmd . " --install-dir /home";
-      $cache = " -v /caches/gem:/.gem";
-      break;
+        break;
 
-    case "pip3":
-      if (!in_array($cmd_command, ["install"])) {
-        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-        $debug_message .= " Use 'pip3 install'.\n";
-        $error = TRUE;
-      }
-      $cmd = $cmd . " --target=/home --no-cache-dir";
-      $cache = " -v /caches/pip:/root/.cache/pip";
-      break;
+      case "composer1":
+        if (!in_array($cmd_command, ["require", "create-project"])) {
+          $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+          $debug_message .= "Use 'composer1 require/create-project' .\n";
+          $error = TRUE;
+        }
+        $cmd = $cmd . " --quiet --prefer-dist --no-ansi --no-interaction --working-dir=/home";
+        $cache = " -v /caches/composer:/.composer/cache";
+        break;
 
-    case "npm":
-      if (!in_array($cmd_command, ["install", "add"])) {
-        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-        $debug_message .= " Use 'npm install/add'.\n";
-        $error = TRUE;
-      }
-      $cmd = $cmd_software . " set progress=false; " . $cmd . " --silent";
-      $cache = " -v /caches/npm/:/.npm";
-      break;
+      case "composer2":
+        if (!in_array($cmd_command, ["require", "create-project"])) {
+          $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+          $debug_message .= "Use 'composer2 require/create-project' .\n";
+          $error = TRUE;
+        }
+        $cmd = $cmd . " --quiet --prefer-dist --no-ansi --no-interaction --working-dir=/home";
+        $cache = " -v /caches/composer:/.composer/cache";
+        break;
 
-    case "yarn":
-      if (!in_array($cmd_command, ["add"])) {
-        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-        $debug_message .= "Use 'yarn add'.\n";
-        $error = TRUE;
-      }
-      $cmd = $cmd . " --no-progress --silent --prefer-online --ignore-optional --non-interactive";
-      $cache = " -v /caches/yarn:/usr/local/share/.cache/yarn/v1";
-      break;
-
-    case "pnpm":
-      if ($cmd_command != "install") {
-        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-        $debug_message .= " Use 'pnpm install'.\n";
-        $error = TRUE;
-      }
-      $cmd = "echo '{}' > package.json && " . $cmd;
-      break;
-
-    case "ied":
-      if ($cmd_command != "install") {
-        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-        $debug_message .= " Use 'ied install'.<br`>";
-        $error = TRUE;
-      }
-      break;
-
-    case "composer":
-      $debug_message .= "Use \"composer1 require/create-project\" or \"composer2 require/create-project\'.\n";
-      $error = TRUE;
-      break;
-
-    case "composer1":
-      if (!in_array($cmd_command, ["require", "create-project"])) {
-        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-        $debug_message .= "Use 'composer1 require/create-project' .\n";
-        $error = TRUE;
-      }
-      $cmd = $cmd . " --quiet --prefer-dist --no-ansi --no-interaction --working-dir=/home";
-      $cache = " -v /caches/composer:/.composer/cache";
-      break;
-
-    case "composer2":
-      if (!in_array($cmd_command, ["require", "create-project"])) {
-        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-        $debug_message .= "Use 'composer2 require/create-project' .\n";
-        $error = TRUE;
-      }
-      $cmd = $cmd . " --quiet --prefer-dist --no-ansi --no-interaction --working-dir=/home";
-      $cache = " -v /caches/composer:/.composer/cache";
-      break;
-
-    case "drush":
-      if (!in_array($cmd_command, ["pm-download", "dl"])) {
-        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-        $debug_message .= " Use 'drush dl/pm-download'.\n";
-        $error = TRUE;
-      }
-      $cache = " -v /caches/drush:/.drush/cache/download";
-      break;
-  }
-
-  if ($error === TRUE) {
+      case "drush":
+        if (!in_array($cmd_command, ["pm-download", "dl"])) {
+          $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
+          $debug_message .= " Use 'drush dl/pm-download'.\n";
+          $error = TRUE;
+        }
+        $cache = " -v /caches/drush:/.drush/cache/download";
+        break;
+    }
+  } else {
     if ($api == 0) {
       echo $debug_message;
       exit();
