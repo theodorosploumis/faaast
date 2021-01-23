@@ -25,6 +25,8 @@ if (isset($_GET['compress'])) {
 // Currently, support only these package managers/tools
 $software = [
   "composer",
+  "composer1",
+  "composer2",
   "drush",
   "gem",
   "ied",
@@ -81,7 +83,7 @@ if (isset($_GET['cmd'])) {
     $error = TRUE;
   }
 
-  switch ($cmd_software) {
+  switch ($cmd_software && $error !== TRUE) {
     case "gem":
       if (!in_array($cmd_command, ["install"])) {
         $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
@@ -140,11 +142,9 @@ if (isset($_GET['cmd'])) {
       break;
 
     case "composer":
-      if (!in_array($cmd_command, ["require", "create-project"])) {
-        $debug_message .= $cmd_software . " " . $cmd_command . " is not a valid command.\n";
-        $debug_message .= "Use \"composer1 require/create-project\" or \"composer2 require/create-project\'.\n";
-        $error = TRUE;
-      }
+      $debug_message .= "Use \"composer1 require/create-project\" or \"composer2 require/create-project\'.\n";
+      $error = TRUE;
+      break;
 
     case "composer1":
       if (!in_array($cmd_command, ["require", "create-project"])) {
@@ -176,7 +176,7 @@ if (isset($_GET['cmd'])) {
       break;
   }
 
-  if ($error == TRUE) {
+  if ($error === TRUE) {
     if ($api == 0) {
       echo $debug_message;
       exit();
