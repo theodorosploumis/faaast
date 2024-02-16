@@ -1,8 +1,5 @@
 # Faaast
 
-[![Docker Stars](https://img.shields.io/docker/stars/tplcom/faaast.svg)]() [![Docker Build
-Status](https://img.shields.io/docker/build/tplcom/faaast.svg)](https://hub.docker.com/r/tplcom/faaast/builds/)
-
 ## About
 
 A package manager as a service (SaaS).
